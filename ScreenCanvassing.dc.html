@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/colors_and_type.css">
+<script src="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/_ds_bundle.js"></script>
+</helmet>
+<div style="width:100%;height:100%;min-width:0;display:flex;flex-direction:column;background:#fff;font-family:var(--font-sans);font-size:13px;line-height:1.4;color:#0F172A;overflow:hidden">
+  <div style="height:52px;flex:none;display:flex;align-items:center;gap:10px;padding:0 20px;border-bottom:1px solid #E2E8F0">
+    <div style="font-size:14px;font-weight:600">Canvassing</div>
+    <div style="font:500 12px var(--font-mono);color:#64748B">Today · 3 reps out</div>
+    <div style="flex:1"></div>
+    <div style="display:flex;gap:2px;padding:2px;background:#F1F5F9;border-radius:7px;font-size:12px"><sc-for list="{{ tabs }}" as="tab"><button type="button" onClick="{{ tab.select }}" aria-pressed="{{ tab.active }}" style="padding:4px 10px;background:{{ tab.bg }};border:0;border-radius:5px;color:{{ tab.fg }};font-weight:{{ tab.fw }};cursor:pointer">{{ tab.name }}</button></sc-for></div>
+    <button type="button" onClick="{{ assign }}" style="height:30px;display:flex;align-items:center;padding:0 12px;background:#0F766E;color:#fff;border:0;border-radius:7px;font-weight:600;cursor:pointer">Assign territory</button>
+  </div>
+  <sc-if value="{{ notice }}"><div role="status" style="padding:8px 20px;background:#F0FDFA;color:#0F766E">{{ notice }}</div></sc-if>
+  <div style="flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 360px;overflow:auto">
+    <sc-if value="{{ showMap }}"><div style="position:relative;min-height:520px;overflow:hidden;background-color:#E9EEF3;background-image:linear-gradient(0deg,#F8FAFC 3px,transparent 3px),linear-gradient(90deg,#F8FAFC 3px,transparent 3px);background-size:{{ gridSize }}">
+      <div style="position:absolute;left:14%;top:16%;width:36%;height:50%;border:2px dashed #0F766E;border-radius:10px;background:rgba(15,118,110,.07)"></div>
+      <div style="position:absolute;left:calc(14% + 8px);top:calc(16% + 8px);height:24px;display:flex;align-items:center;padding:0 8px;background:#0F766E;color:#fff;border-radius:6px;font-size:12px;font-weight:600">Allandale · Zone 4 · Jordan</div>
+      <div style="position:absolute;left:56%;top:44%;width:30%;height:40%;border:2px dashed #64748B;border-radius:10px;background:rgba(100,116,139,.07)"></div>
+      <div style="position:absolute;left:calc(56% + 8px);top:calc(44% + 8px);height:24px;display:flex;align-items:center;padding:0 8px;background:#475569;color:#fff;border-radius:6px;font-size:12px;font-weight:600">Crestview · Zone 7 · Kelsey</div>
+      <sc-for list="{{ pins }}" as="p" hint-placeholder-count="40">
+        <span style="position:absolute;left:{{ p.x }};top:{{ p.y }};width:10px;height:10px;border-radius:50%;background:{{ p.c }};border:2px solid #fff;box-shadow:0 1px 2px rgba(15,23,42,.25)"></span>
+      </sc-for>
+      <sc-for list="{{ repPins }}" as="r" hint-placeholder-count="2">
+        <button type="button" onClick="{{ r.select }}" aria-label="Select {{ r.name }}" style="position:absolute;left:{{ r.x }};top:{{ r.y }};width:28px;height:28px;border-radius:50%;background:{{ r.c }};color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;border:3px solid #fff;box-shadow:0 4px 10px rgba(15,23,42,.25);cursor:pointer">{{ r.ini }}</button>
+      </sc-for>
+      <div style="position:absolute;left:16px;bottom:16px;background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:6px;font-size:12px;box-shadow:0 20px 56px -40px rgba(15,23,42,.22)">
+        <sc-for list="{{ legend }}" as="l" hint-placeholder-count="4">
+          <span style="display:flex;align-items:center;gap:7px"><span style="width:9px;height:9px;border-radius:50%;background:{{ l.c }}"></span><span style="flex:1;color:#334155">{{ l.l }}</span><span style="font-family:var(--font-mono);color:#64748B;margin-left:14px">{{ l.n }}</span></span>
+        </sc-for>
+      </div>
+      <div style="position:absolute;right:16px;bottom:16px;display:flex;flex-direction:column;background:#fff;border:1px solid #E2E8F0;border-radius:8px;overflow:hidden;font-size:15px;color:#475569"><button type="button" onClick="{{ zoomIn }}" aria-label="Zoom in" style="width:32px;height:32px;border:0;border-bottom:1px solid #E2E8F0;background:#fff;cursor:pointer">+</button><button type="button" onClick="{{ zoomOut }}" aria-label="Zoom out" style="width:32px;height:32px;border:0;background:#fff;cursor:pointer">−</button></div>
+      <div style="position:absolute;right:16px;top:16px;font-size:11px;color:#64748B;background:rgba(255,255,255,.85);padding:3px 7px;border-radius:5px">Illustrative map · {{ zoom }}%</div>
+    </div></sc-if>
+    <sc-if value="{{ showReps }}"><div style="padding:20px;overflow:auto"><strong>Field reps</strong><sc-for list="{{ reps }}" as="r"><button type="button" onClick="{{ r.select }}" style="display:flex;justify-content:space-between;width:100%;margin-top:10px;padding:12px;border:1px solid #E2E8F0;border-radius:7px;background:#fff;text-align:left;cursor:pointer"><span>{{ r.n }}</span><span>{{ r.d }} doors · {{ r.l }} leads · {{ r.b }} booked</span></button></sc-for></div></sc-if>
+    <sc-if value="{{ showTerritories }}"><div style="padding:20px;overflow:auto"><strong>Territories</strong><sc-for list="{{ territories }}" as="t"><button type="button" onClick="{{ t.select }}" style="display:block;width:100%;margin-top:10px;padding:12px;border:1px solid #E2E8F0;border-radius:7px;background:#fff;text-align:left;cursor:pointer">{{ t.name }} · {{ t.rep }}</button></sc-for></div></sc-if>
+    <div style="border-left:1px solid #E2E8F0;display:flex;flex-direction:column;min-width:0;overflow:auto">
+      <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #E2E8F0">
+        <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+          <div style="padding:12px 16px;border-bottom:1px solid #F1F5F9;border-right:1px solid #F1F5F9"><div style="font-size:11px;color:#64748B">{{ s.k }}</div><div style="font:600 20px var(--font-mono);letter-spacing:-.02em;color:{{ s.c }}">{{ s.v }}</div></div>
+        </sc-for>
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) 44px 44px 50px 48px;gap:0 8px;padding:0 16px;height:28px;align-items:center;border-bottom:1px solid #E2E8F0;background:#F8FAFC;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#94A3B8"><span>Rep</span><span style="text-align:right">Doors</span><span style="text-align:right">Leads</span><span style="text-align:right">Booked</span><span style="text-align:right">Rate</span></div>
+      <sc-for list="{{ reps }}" as="r" hint-placeholder-count="3">
+        <button type="button" onClick="{{ r.select }}" style="width:100%;text-align:left;background:#fff;border:0;display:grid;grid-template-columns:minmax(0,1fr) 44px 44px 50px 48px;gap:0 8px;padding:0 16px;height:38px;align-items:center;border-bottom:1px solid #F1F5F9;font:500 12px var(--font-mono);cursor:pointer">
+          <span style="display:flex;align-items:center;gap:8px;font:600 13px var(--font-sans)"><span style="width:22px;height:22px;border-radius:50%;background:{{ r.c }};color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center">{{ r.ini }}</span>{{ r.n }}</span>
+          <span style="text-align:right">{{ r.d }}</span><span style="text-align:right">{{ r.l }}</span><span style="text-align:right;color:#15803D;font-weight:600">{{ r.b }}</span><span style="text-align:right;color:#64748B">{{ r.r }}</span>
+        </button>
+      </sc-for>
+      <div style="padding:14px 16px 6px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#94A3B8">Recent knocks</div>
+      <sc-for list="{{ knocks }}" as="k" hint-placeholder-count="6">
+        <div style="display:flex;gap:10px;padding:8px 16px;border-bottom:1px solid #F1F5F9">
+          <span style="flex:none;margin-top:5px;width:9px;height:9px;border-radius:50%;background:{{ k.c }}"></span>
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px">
+            <div style="display:flex;gap:8px"><span style="flex:1;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ k.a }}</span><span style="font:500 11px var(--font-mono);color:#94A3B8">{{ k.t }}</span></div>
+            <div style="font-size:12px;color:#64748B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ k.note }}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1208,&quot;height&quot;:900},&quot;onOpen&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(screen: string) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'Map', zoom: 100, rep: '', territory: '', notice: '' };
+  }
+  renderVals() {
+    const tabs = ['Map', 'Reps', 'Territories'].map(name => ({ name, active: this.state.tab === name, bg: this.state.tab === name ? '#fff' : 'transparent', fg: this.state.tab === name ? '#0F172A' : '#64748B', fw: this.state.tab === name ? 600 : 500, select: () => this.setState({ tab: name }) }));
+    const selectRep = name => () => this.setState({ rep: name, notice: `${name} selected for this preview.` });
+    const C = { booked: '#16A34A', interested: '#0F766E', nothome: '#94A3B8', no: '#DD6B2F' };
+    let seed = 7;
+    const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+    const kinds = ['nothome', 'nothome', 'nothome', 'no', 'interested', 'nothome', 'no', 'booked', 'interested', 'nothome'];
+    const zone = (x0, y0, w, h, n) => Array.from({ length: n }, () => ({ x: (x0 + 2 + rnd() * (w - 4)).toFixed(1) + '%', y: (y0 + 7 + rnd() * (h - 10)).toFixed(1) + '%', c: C[kinds[Math.floor(rnd() * kinds.length)]] }));
+    const pins = [...zone(14, 16, 36, 50, 30), ...zone(56, 44, 30, 40, 18)];
+    const repPins = [{ ini: 'JR', name: 'Jordan R.', c: '#2563EB', x: '38%', y: '44%' }, { ini: 'KT', name: 'Kelsey T.', c: '#0F766E', x: '70%', y: '66%' }].map(r => ({ ...r, select: selectRep(r.name) }));
+    const legend = [['Booked', '6', C.booked], ['Interested', '11', C.interested], ['Not home', '153', C.nothome], ['Not interested', '44', C.no]].map(([l, n, c]) => ({ l, n, c }));
+    const stats = [['Doors', '214', '#0F172A'], ['Conversations', '61', '#0F172A'], ['Leads', '17', '#0F766E'], ['Booked', '6', '#15803D']].map(([k, v, c]) => ({ k, v, c }));
+    const reps = [['JR', 'Jordan R.', '#2563EB', 88, 7, 3], ['KT', 'Kelsey T.', '#0F766E', 74, 6, 2], ['AL', 'Ali L.', '#F97316', 52, 4, 1]].map(([ini, n, c, d, l, b]) => ({ ini, n, c, d, l, b, r: (b / d * 100).toFixed(1) + '%', select: selectRep(n) }));
+    const territories = [['Allandale · Zone 4', 'Jordan R.'], ['Crestview · Zone 7', 'Kelsey T.']].map(([name, rep]) => ({ name, rep, select: () => this.setState({ territory: name, notice: `${name} selected for this preview.` }) }));
+    const knocks = [
+      ['2412 Hartford Rd', '2:11 PM', 'booked', 'Booked · house + driveway · Oct 3'],
+      ['2418 Hartford Rd', '2:08 PM', 'nothome', 'Not home · door hanger left'],
+      ['2420 Hartford Rd', '2:05 PM', 'interested', 'Wants quote for roof · text follow-up'],
+      ['2503 Pembrook Tr', '1:58 PM', 'no', 'Not interested · did it in spring'],
+      ['7104 Shoal Creek Blvd', '1:52 PM', 'interested', 'Neighbor of Pruitt · referral discount'],
+      ['2507 Pembrook Tr', '1:47 PM', 'nothome', 'Not home'],
+    ].map(([a, t, k, note]) => ({ a, t, note, c: C[k] }));
+    return { pins, repPins, legend, stats, reps, knocks, territories, tabs, notice: this.state.notice, showMap: this.state.tab === 'Map', showReps: this.state.tab === 'Reps', showTerritories: this.state.tab === 'Territories', zoom: this.state.zoom, gridSize: `${96 * this.state.zoom / 100}px ${72 * this.state.zoom / 100}px,${120 * this.state.zoom / 100}px ${96 * this.state.zoom / 100}px`, zoomIn: () => this.setState({ zoom: Math.min(150, this.state.zoom + 25) }), zoomOut: () => this.setState({ zoom: Math.max(75, this.state.zoom - 25) }), assign: () => this.setState({ notice: this.state.rep && this.state.territory ? `${this.state.territory} → ${this.state.rep} assignment preview only. No territory changed.` : 'Select a rep and a territory to preview an assignment.' }) };
+  }
+}
+</script>
+</body>
+</html>

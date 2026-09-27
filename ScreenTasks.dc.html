@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/colors_and_type.css">
+<script src="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/_ds_bundle.js"></script>
+</helmet>
+<div style="width:100%;height:100%;min-width:0;display:flex;flex-direction:column;background:#fff;font-family:var(--font-sans);font-size:13px;line-height:1.4;color:#0F172A;overflow:hidden">
+  <div style="height:52px;flex:none;display:flex;align-items:center;gap:10px;padding:0 20px;border-bottom:1px solid #E2E8F0">
+    <div style="font-size:14px;font-weight:600">Tasks</div>
+    <div style="font:500 12px var(--font-mono);color:#64748B">5 due today · 2 overdue</div>
+    <div style="flex:1"></div>
+    <div style="display:flex;gap:2px;padding:2px;background:#F1F5F9;border-radius:7px;font-size:12px"><sc-for list="{{ filters }}" as="f"><button onClick="{{ f.select }}" style="padding:4px 10px;background:{{ f.bg }};border:0;border-radius:5px;font-weight:{{ f.fw }};color:{{ f.fg }};cursor:pointer">{{ f.name }}</button></sc-for></div>
+    <button onClick="{{ newTask }}" style="height:30px;display:flex;align-items:center;padding:0 12px;background:#0F766E;color:#fff;border:0;border-radius:7px;font-weight:600;cursor:pointer">New task</button>
+  </div>
+  <div style="flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 380px">
+    <div style="display:flex;flex-direction:column;min-width:0;border-right:1px solid #E2E8F0;overflow:auto">
+      <div style="display:grid;grid-template-columns:20px minmax(0,1fr) 210px 90px 36px;gap:0 12px;padding:0 20px;height:30px;align-items:center;border-bottom:1px solid #E2E8F0;background:#F8FAFC;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#94A3B8">
+        <span></span><span>Task</span><span>Linked to</span><span>Due</span><span></span>
+      </div>
+      <sc-for list="{{ groups }}" as="g" hint-placeholder-count="4">
+        <div onClick="{{ g.toggle }}" onKeyDown="{{ g.keyToggle }}" role="button" tabindex="0" style="display:flex;align-items:center;gap:8px;padding:0 20px;height:34px;background:#FCFDFE;border-bottom:1px solid #F1F5F9;cursor:pointer">
+          <svg width="12" height="12" viewBox="0 0 24 24" style="fill:none;stroke:#94A3B8;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"><path d="{{ g.chev }}"></path></svg>
+          <span style="font-weight:600;color:{{ g.c }}">{{ g.name }}</span><span style="font:500 12px var(--font-mono);color:#94A3B8">{{ g.n }}</span>
+        </div>
+        <sc-for list="{{ g.rows }}" as="t" hint-placeholder-count="3">
+          <div onClick="{{ t.select }}" onKeyDown="{{ t.keySelect }}" role="button" tabindex="0" style="display:grid;grid-template-columns:20px minmax(0,1fr) 210px 90px 36px;gap:0 12px;padding:0 20px;height:42px;align-items:center;border-bottom:1px solid #F1F5F9;background:{{ t.bg }};cursor:pointer">
+            <button onClick="{{ t.complete }}" aria-label="Toggle task complete" style="width:16px;height:16px;border-radius:5px;border:1.5px solid #CBD5E1;box-sizing:border-box;background:{{ t.cb }};color:#fff;font-size:11px;padding:0;cursor:pointer">{{ t.tick }}</button>
+            <span style="font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ t.n }}</span>
+            <span style="display:flex;align-items:center;gap:6px;min-width:0;font-size:12px"><span style="color:#94A3B8;white-space:nowrap">{{ t.lt }}</span><span style="color:#334155;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ t.lv }}</span></span>
+            <span style="font:500 12px var(--font-mono);color:{{ t.dc }}">{{ t.due }}</span>
+            <span style="width:22px;height:22px;border-radius:50%;background:{{ t.rc }};color:#fff;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center">{{ t.rep }}</span>
+          </div>
+        </sc-for>
+      </sc-for>
+    </div>
+    <div style="display:flex;flex-direction:column;min-width:0;background:#FCFDFE;overflow:auto">
+      <div style="padding:18px 20px 14px;display:flex;flex-direction:column;gap:8px;border-bottom:1px solid #E2E8F0">
+        <div style="display:flex;gap:10px;align-items:flex-start"><button onClick="{{ completeSelected }}" aria-label="Toggle selected task complete" style="flex:none;margin-top:3px;width:18px;height:18px;border-radius:5px;border:1.5px solid #CBD5E1;box-sizing:border-box;background:{{ selected.cb }};color:#fff;padding:0;cursor:pointer">{{ selected.tick }}</button><div style="font-size:16px;font-weight:700;letter-spacing:-.01em;line-height:1.3">{{ selected.n }}</div></div>
+        <div style="font-size:12px;color:#64748B;padding-left:28px">{{ selected.source }}</div>
+      </div>
+      <sc-for list="{{ attrs }}" as="r" hint-placeholder-count="4">
+        <div style="display:grid;grid-template-columns:90px minmax(0,1fr);gap:10px;padding:0 20px;height:32px;align-items:center"><span style="color:#64748B">{{ r.k }}</span><span style="font-weight:500;color:{{ r.c }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.v }}</span></div>
+      </sc-for>
+      <div style="margin:10px 20px 0;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;background:#fff;color:#475569;line-height:1.5">{{ selected.description }}</div>
+      <div style="padding:16px 20px 6px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#94A3B8">Checklist · {{ checkCount }}</div>
+      <sc-for list="{{ checks }}" as="c" hint-placeholder-count="3">
+        <div onClick="{{ c.toggle }}" onKeyDown="{{ c.keyToggle }}" role="checkbox" aria-checked="{{ c.on }}" tabindex="0" style="display:flex;align-items:center;gap:9px;padding:0 20px;height:30px;cursor:pointer"><span style="width:15px;height:15px;border-radius:4px;display:flex;align-items:center;justify-content:center;background:{{ c.bg }};border:1px solid {{ c.bd }};color:#fff;font-size:10px">{{ c.tick }}</span><span style="color:{{ c.fg }};text-decoration:{{ c.td }}">{{ c.l }}</span></div>
+      </sc-for>
+      <div style="padding:16px 20px 6px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#94A3B8">Comments</div>
+      <sc-for list="{{ comments }}" as="c" hint-placeholder-count="2">
+        <div style="display:flex;gap:9px;padding:6px 20px"><span style="flex:none;width:22px;height:22px;border-radius:50%;background:{{ c.rc }};color:#fff;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center">{{ c.ini }}</span><div style="display:flex;flex-direction:column;gap:2px"><div style="font-size:12px"><span style="font-weight:600">{{ c.who }}</span> <span style="font-family:var(--font-mono);color:#94A3B8">{{ c.t }}</span></div><div style="color:#334155">{{ c.x }}</div></div></div>
+      </sc-for>
+      <div style="flex:1"></div>
+      <div style="margin:12px 20px 16px;border:1px solid #E2E8F0;border-radius:8px;padding:9px 12px;background:#fff;display:flex;gap:8px"><input aria-label="Task comment" placeholder="Comment or @mention…" value="{{ commentDraft }}" onInput="{{ editComment }}" style="flex:1;min-width:0;border:0;font:inherit;outline:none"><button onClick="{{ addComment }}" style="border:0;background:#0F766E;color:#fff;border-radius:5px;padding:3px 8px;cursor:pointer">Add</button></div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1208,&quot;height&quot;:900},&quot;onOpen&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(screen: string) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const rc = { HM: '#F97316', JR: '#2563EB', KT: '#0F766E' };
+    const down = 'm6 9 6 6 6-6', right = 'm9 6 6 6-6 6';
+    const current = this.state.selected || 'Call Hartley about Best tier';
+    const filter = this.state.filter || 'All';
+    const row = (dc) => ([n, lt, lv, due, rep]) => { const select = () => this.setState({ selected: n }); return { n, lt, lv, due, rep, rc: rc[rep], dc, bg: n === current ? '#F0FDFA' : 'transparent', cb: this.state.completed?.[n] ? '#0F766E' : '#fff', tick: this.state.completed?.[n] ? '✓' : '', select, keySelect: e => { if (e.target === e.currentTarget && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); select(); } }, complete: e => { e.stopPropagation(); this.setState({ completed: { ...this.state.completed, [n]: !this.state.completed?.[n] } }); } }; };
+    const groups = [
+      { name: 'Overdue', c: '#C2410C', n: '2', chev: down, rows: [['Send revised quote to Lakeway Medical', 'Estimate', 'EST-2284', 'Sep 24', 'JR'], ['Follow up on lights package', 'Client', 'Joan Mercer', 'Sep 25', 'HM']].map(row('#C2410C')) },
+      { name: 'Today', c: '#0F172A', n: '5', chev: down, rows: [['Call Hartley about Best tier', 'Estimate', 'EST-2296 · $2,310', '11:00 AM', 'HM', 1], ['Confirm Brookside 7am start', 'Client', 'Brookside Apartments', '12:00 PM', 'JR'], ['Approve Crew C timesheet', 'Crew', 'Crew C', '3:00 PM', 'HM'], ['Order 12.5% SH — 4 drums', 'Ops', 'Inventory', '4:00 PM', 'KT'], ['Schedule Pruitt roof job', 'Estimate', 'EST-2291 · $1,685', '5:00 PM', 'HM']].map(row('#334155')) },
+      { name: 'This week', c: '#0F172A', n: '6', chev: down, rows: [['Measure Metro Auto lot', 'Client', 'Metro Auto Group', 'Fri', 'JR'], ['Truck 1 oil change', 'Ops', 'Truck 1 · F-250', 'Fri', 'KT'], ['Post Oak Hill before/after', 'Job', 'JOB-3371', 'Sat', 'HM'], ['Renew GL insurance certificate', 'Business', 'Insurance', 'Mon', 'HM'], ['Roof pitch safety with Kai', 'Crew', 'Crew C', 'Tue', 'KT'], ['Quarterly review with Lakeway', 'Client', 'Lakeway Medical', 'Wed', 'JR']].map(row('#64748B')) },
+      { name: 'Completed today', c: '#64748B', n: '4', chev: right, rows: [] },
+    ];
+    const custom = (this.state.custom || []).map(n => row('#334155')([n, 'Task', 'Local demo', 'Today', 'HM']));
+    const all = groups.flatMap(g => g.rows).concat(custom);
+    const selected = all.find(t => t.n === current) || all[0];
+    selected.source = current === 'Call Hartley about Best tier' ? 'Created by automation · Hot lead alert' : 'Local demo task';
+    selected.description = current === 'Call Hartley about Best tier' ? 'Opened EST-2296 three times since yesterday, lingered on the Best tier. Offer to walk the deck sealing option — they asked about it on the visit.' : `${selected.lt}: ${selected.lv}. Due ${selected.due}.`;
+    const filters = ['All', 'Mine', 'From automations'].map(name => ({ name, bg: name === filter ? '#fff' : 'transparent', fw: name === filter ? 600 : 400, fg: name === filter ? '#0F172A' : '#64748B', select: () => this.setState({ filter: name }) }));
+    for (const g of groups) {
+      if (g.name === 'Today') g.rows.push(...custom);
+      g.toggle = () => this.setState({ collapsed: { ...this.state.collapsed, [g.name]: !this.state.collapsed?.[g.name] } });
+      g.keyToggle = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); g.toggle(); } };
+      g.chev = this.state.collapsed?.[g.name] ? right : down;
+      g.rows = this.state.collapsed?.[g.name] ? [] : g.rows.filter(t => filter === 'All' || filter === 'Mine' && t.rep === 'HM' || filter === 'From automations' && t.n === 'Call Hartley about Best tier');
+    }
+    const attrs = [['Due', current === 'Call Hartley about Best tier' ? 'Today · 11:00 AM' : selected.due, '#0F172A'], ['Assignee', { HM: 'Hannah Morales', JR: 'Jordan Reed', KT: 'Kelsey Tran' }[selected.rep], '#0F172A'], ['Linked', selected.lv, '#0F766E'], ['Type', selected.lt, '#0F172A']].map(([k, v, c]) => ({ k, v, c }));
+    const checks = (current === 'Call Hartley about Best tier' ? ['Review what they viewed', 'Call — offer Thursday start', 'Send revised Best tier if needed'] : ['Review task details', 'Complete task']).map((l, i) => { const on = this.state.checks?.[current + i] ?? (current === 'Call Hartley about Best tier' && i === 0); const toggle = () => this.setState({ checks: { ...this.state.checks, [current + i]: !on } }); return { l, on, bg: on ? '#0F766E' : '#fff', bd: on ? '#0F766E' : '#CBD5E1', fg: on ? '#94A3B8' : '#334155', td: on ? 'line-through' : 'none', tick: on ? '✓' : '', toggle, keyToggle: e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } } }; });
+    const comments = (current === 'Call Hartley about Best tier' ? [['JR', 'Jordan R.', '9:14 AM', 'They mentioned budget was ~$2k on the walk-through.'], ['HM', 'Hannah M.', '9:20 AM', "Got it — I'll lead with Better and offer deck seal as add-on."]] : []).concat((this.state.comments?.[current] || []).map(x => ['HM', 'You', 'Local demo', x])).map(([ini, who, t, x]) => ({ ini, who, t, x, rc: rc[ini] }));
+    return { groups, attrs, checks, checkCount: `${checks.filter(c => c.tick).length}/${checks.length}`, comments, selected, filters, completeSelected: () => this.setState({ completed: { ...this.state.completed, [current]: !this.state.completed?.[current] } }), commentDraft: this.state.commentDraft || '', editComment: e => this.setState({ commentDraft: e.target.value }), addComment: () => { const x = this.state.commentDraft?.trim(); if (x) this.setState({ comments: { ...this.state.comments, [current]: [...(this.state.comments?.[current] || []), x] }, commentDraft: '' }); }, newTask: () => { const n = window.prompt('Task name'); if (n?.trim()) this.setState({ custom: [...(this.state.custom || []), n.trim()], selected: n.trim() }); } };
+  }
+}
+</script>
+</body>
+</html>

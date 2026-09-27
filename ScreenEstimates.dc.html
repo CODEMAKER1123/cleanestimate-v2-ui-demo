@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/colors_and_type.css">
+<script src="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/_ds_bundle.js"></script>
+</helmet>
+<div style="width:100%;height:100%;min-width:0;display:flex;flex-direction:column;background:#fff;font-family:var(--font-sans);font-size:13px;line-height:1.4;color:#0F172A;overflow:hidden">
+  <div style="height:52px;flex:none;display:flex;align-items:center;gap:10px;padding:0 20px;border-bottom:1px solid #E2E8F0">
+    <div style="font-size:14px;font-weight:600">Estimates</div>
+    <div style="font:500 12px var(--font-mono);color:#64748B">Sep 1 – 26</div>
+    <div style="flex:1"></div>
+    <button type="button" onClick="{{ open }}" style="height:30px;display:flex;align-items:center;padding:0 10px;border:1px solid #E2E8F0;border-radius:7px;color:#334155;font:500 13px var(--font-sans);background:#fff;cursor:pointer">Templates</button>
+    <button type="button" onClick="{{ open }}" style="height:30px;display:flex;align-items:center;padding:0 12px;border:0;background:#0F766E;color:#fff;border-radius:7px;font:600 13px var(--font-sans);cursor:pointer">New estimate</button>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-bottom:1px solid #E2E8F0">
+    <sc-for list="{{ strip }}" as="s" hint-placeholder-count="6">
+      <button type="button" onClick="{{ s.select }}" aria-pressed="{{ s.active }}" style="padding:12px 20px 10px;border:0;border-right:1px solid #E2E8F0;border-bottom:2px solid {{ s.bd }};display:flex;flex-direction:column;gap:3px;cursor:pointer;background:#fff;text-align:left;color:inherit;font-family:inherit">
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#64748B"><span style="width:7px;height:7px;border-radius:50%;background:{{ s.c }}"></span>{{ s.l }}</div>
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font:600 20px var(--font-mono);letter-spacing:-.02em">{{ s.n }}</span><span style="font:500 12px var(--font-mono);color:#64748B">{{ s.amt }}</span></div>
+      </button>
+    </sc-for>
+  </div>
+  <div style="display:grid;grid-template-columns:84px minmax(0,1.3fr) minmax(0,1.4fr) 64px 84px 96px 72px 50px 28px;gap:0 12px;padding:0 20px;height:30px;align-items:center;border-bottom:1px solid #E2E8F0;background:#F8FAFC;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#94A3B8">
+    <span>ID</span><span>Client</span><span>Services</span><span>Tier</span><span style="text-align:right">Amount</span><span>Status</span><span>Sent</span><span style="text-align:right">Views</span><span></span>
+  </div>
+  <div style="flex:1;min-height:0;overflow:auto">
+    <sc-for list="{{ rows }}" as="r" hint-placeholder-count="15">
+      <div role="button" tabindex="0" onClick="{{ open }}" onKeyDown="{{ openKey }}" aria-label="Open {{ r.id }} for {{ r.c }}" style="display:grid;grid-template-columns:84px minmax(0,1.3fr) minmax(0,1.4fr) 64px 84px 96px 72px 50px 28px;gap:0 12px;padding:0 20px;height:42px;align-items:center;border-bottom:1px solid #F1F5F9;cursor:pointer" style-hover="background:#F8FAFC">
+        <span style="font:500 12px var(--font-mono);color:#64748B">{{ r.id }}</span>
+        <span style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.c }}</span>
+        <span style="color:#475569;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.s }}</span>
+        <span style="color:#64748B;font-size:12px">{{ r.tier }}</span>
+        <span style="text-align:right;font:600 13px var(--font-mono)">{{ r.amt }}</span>
+        <span><span style="height:22px;display:inline-flex;align-items:center;gap:5px;padding:0 7px;border-radius:5px;font-size:12px;font-weight:500;white-space:nowrap;background:{{ r.bg }};color:{{ r.fg }}"><span style="width:6px;height:6px;border-radius:50%;background:{{ r.fg }}"></span>{{ r.st }}</span></span>
+        <span style="font:500 12px var(--font-mono);color:#475569">{{ r.sent }}</span>
+        <span style="text-align:right;font:500 12px var(--font-mono);color:{{ r.vc }}">{{ r.v }}</span>
+        <span style="width:22px;height:22px;border-radius:50%;background:{{ r.rc }};color:#fff;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center">{{ r.rep }}</span>
+      </div>
+    </sc-for>
+  </div>
+  <div style="height:36px;flex:none;display:flex;align-items:center;gap:16px;padding:0 20px;border-top:1px solid #E2E8F0;background:#F8FAFC;font-size:12px;color:#64748B">
+    <span>{{ countLabel }}</span><span style="flex:1"></span><span>Open value <span style="font-family:var(--font-mono);color:#0F172A;font-weight:600">$26,830</span></span><span>Median time to sign <span style="font-family:var(--font-mono);color:#0F172A;font-weight:600">1.6 days</span></span>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1208,&quot;height&quot;:900},&quot;onOpen&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(screen: string) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const S = { Draft: ['#F1F5F9', '#475569'], Sent: ['#EFF6FF', '#1D4ED8'], Viewed: ['#F0FDFA', '#0F766E'], Signed: ['#F0FDF4', '#15803D'], Expired: ['#FFF1E8', '#C2410C'] };
+    const selected = this.state.status || 'All';
+    const strip = [['All', '42', '$67,870', '#0F172A'], ['Draft', '4', '$5,120', '#94A3B8'], ['Sent', '5', '$9,300', '#2563EB'], ['Viewed', '4', '$12,410', '#0F766E'], ['Signed', '26', '$38,900', '#16A34A'], ['Expired', '3', '$2,140', '#DD6B2F']].map(([l, n, amt, c]) => ({ l, n, amt, c, active: l === selected, bd: l === selected ? '#0F766E' : 'transparent', select: () => this.setState({ status: l }) }));
+    const rc = { HM: '#F97316', JR: '#2563EB', KT: '#0F766E' };
+    const rows = [
+      ['EST-2296', 'Hartley residence', 'House, roof, deck', 'Best', '$2,310', 'Viewed', 'Sep 25', '3', 'HM'],
+      ['EST-2295', 'Kara Voss', 'House + roof', '—', '$1,400', 'Draft', '—', '—', 'HM'],
+      ['EST-2294', 'Brookside Apartments', 'Breezeways, 4 buildings', '—', '$6,800', 'Viewed', 'Sep 25', '2', 'JR'],
+      ['EST-2293', 'Fleetline Logistics', '22 box trucks · monthly', '—', '$3,300', 'Draft', '—', '—', 'JR'],
+      ['EST-2292', 'Nora Lindqvist', 'Roof soft wash', 'Better', '$1,180', 'Sent', 'Sep 24', '0', 'KT'],
+      ['EST-2291', 'Marcus Pruitt', 'Roof, gutters, flatwork', 'Better', '$1,685', 'Signed', 'Sep 25', '4', 'HM'],
+      ['EST-2290', 'Eastside Brewing', 'Dumpster pad + front', '—', '$760', 'Signed', 'Sep 24', '2', 'JR'],
+      ['EST-2289', 'Oakmont Church', 'Parking + sidewalks', '—', '$2,450', 'Viewed', 'Sep 22', '1', 'JR'],
+      ['EST-2288', 'Dev Kapoor', 'House wash', 'Good', '$490', 'Sent', 'Sep 20', '0', 'HM'],
+      ['EST-2287', 'Halvorsen family', 'Roofline + trees', 'Best', '$3,100', 'Signed', 'Sep 23', '5', 'HM'],
+      ['EST-2286', 'Metro Auto Group', 'Lot + 40 vehicles', '—', '$4,800', 'Signed', 'Sep 22', '3', 'JR'],
+      ['EST-2285', 'Rivera family', 'Roof + gutters', 'Better', '$1,340', 'Viewed', 'Sep 21', '2', 'KT'],
+      ['EST-2284', 'Lakeway Medical', 'Quarterly exterior', '—', '$4,200', 'Sent', 'Sep 19', '1', 'JR'],
+      ['EST-2283', 'Sam Whitaker', 'Fence + deck restore', 'Good', '$1,020', 'Expired', 'Aug 27', '1', 'KT'],
+      ['EST-2282', 'Joan Mercer', 'Full lights package', 'Best', '$2,900', 'Sent', 'Sep 17', '1', 'HM'],
+    ].map(([id, c, s, tier, amt, st, sent, v, rep]) => ({ id, c, s, tier, amt, st, sent, v, rep, rc: rc[rep], bg: S[st][0], fg: S[st][1], vc: +v >= 3 ? '#0F766E' : '#94A3B8' }));
+    const open = () => this.props.onOpen?.('estimate');
+    const openKey = (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); open(); } };
+    const visibleRows = selected === 'All' ? rows : rows.filter((row) => row.st === selected);
+    return { strip, rows: visibleRows, countLabel: selected === 'All' ? '15 of 42' : `${visibleRows.length} shown · ${selected}`, open, openKey };
+  }
+}
+</script>
+</body>
+</html>

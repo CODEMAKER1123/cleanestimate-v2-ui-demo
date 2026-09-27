@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/colors_and_type.css">
+<script src="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/_ds_bundle.js"></script>
+<link rel="stylesheet" href="./demo.css">
+</helmet>
+<div class="demo-shell">
+  <header class="demo-mobile-bar"><button type="button" aria-controls="demo-navigation" aria-expanded="{{ menuOpen }}" onClick="{{ toggleMenu }}">☰ Screens</button><span>Demo data · Preview only</span></header>
+  <div id="demo-navigation" class="demo-nav-panel {{ menuClass }}" onKeyDown="{{ menuKey }}">
+    <dc-import name="V2Sidebar" active="{{ nav }}" on-navigate="{{ go }}" hint-size="232px,100%" style="height:100%"></dc-import>
+  </div>
+  <main class="demo-stage" aria-label="Demo screen">
+    <sc-if value="{{ is.home }}" hint-placeholder-val="{{ true }}"><dc-import name="ScreenHome" on-open="{{ go }}" hint-size="100%,100%" style="flex:1;min-width:0;height:100vh"></dc-import></sc-if>
+    <sc-if value="{{ is.inbox }}"><dc-import name="ScreenInbox" on-open="{{ go }}" hint-size="100%,100%" style="flex:1;min-width:0;height:100vh"></dc-import></sc-if>
+    <sc-if value="{{ is.tasks }}"><dc-import name="ScreenTasks" on-open="{{ go }}" hint-size="100%,100%" style="flex:1;min-width:0;height:100vh"></dc-import></sc-if>
+    <sc-if value="{{ is.clients }}"><dc-import name="ScreenClients" on-open="{{ go }}" hint-size="100%,100%" style="flex:1;min-width:0;height:100vh"></dc-import></sc-if>
+    <sc-if value="{{ is.client }}"><dc-import name="ScreenClient" on-open="{{ go }}" hint-size="100%,100%" style="flex:1;min-width:0;height:100vh"></dc-import></sc-if>
+    <sc-if value="{{ is.pipeline }}"><dc-import name="ScreenPipeline" on-open="{{ go }}" hint-size="100%,100%" style="flex:1;min-width:0;height:100vh"></dc-import></sc-if>
+    <sc-if value="{{ is.estimates }}"><dc-import name="ScreenEstimates" on-open="{{ go }}" hint-size="100%,100%" style="flex:1;min-width:0;height:100vh"></dc-import></sc-if>
+    <sc-if value="{{ is.estimate }}"><dc-import name="ScreenEstimate" on-open="{{ go }}" hint-size="100%,100%" style="flex:1;min-width:0;height:100vh"></dc-import></sc-if>
+    <sc-if value="{{ is.pricebook }}"><dc-import name="ScreenPricebook" on-open="{{ go }}" hint-size="100%,100%" style="flex:1;min-width:0;height:100vh"></dc-import></sc-if>
+    <sc-if value="{{ is.calendar }}"><dc-import name="ScreenCalendar" on-open="{{ go }}" hint-size="100%,100%" style="flex:1;min-width:0;height:100vh"></dc-import></sc-if>
+    <sc-if value="{{ is.plans }}"><dc-import name="ScreenPlans" on-open="{{ go }}" hint-size="100%,100%" style="flex:1;min-width:0;height:100vh"></dc-import></sc-if>
+    <sc-if value="{{ is.ops }}"><dc-import name="ScreenOps" on-open="{{ go }}" hint-size="100%,100%" style="flex:1;min-width:0;height:100vh"></dc-import></sc-if>
+    <sc-if value="{{ is.canvassing }}"><dc-import name="ScreenCanvassing" on-open="{{ go }}" hint-size="100%,100%" style="flex:1;min-width:0;height:100vh"></dc-import></sc-if>
+    <sc-if value="{{ is.invoices }}"><dc-import name="ScreenInvoices" on-open="{{ go }}" hint-size="100%,100%" style="flex:1;min-width:0;height:100vh"></dc-import></sc-if>
+    <sc-if value="{{ is.automations }}"><dc-import name="ScreenAutomations" on-open="{{ go }}" hint-size="100%,100%" style="flex:1;min-width:0;height:100vh"></dc-import></sc-if>
+    <sc-if value="{{ is.reports }}"><dc-import name="ScreenReports" on-open="{{ go }}" hint-size="100%,100%" style="flex:1;min-width:0;height:100vh"></dc-import></sc-if>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { screen: (() => { try { return localStorage.getItem('ce-v2-screen') || 'home'; } catch (e) { return 'home'; } })(), menuOpen: false };
+  go = (k) => { try { localStorage.setItem('ce-v2-screen', k); } catch (e) {} this.setState({ screen: k, menuOpen: false }); };
+  renderVals() {
+    const s = this.state.screen;
+    const nav = { client: 'clients', estimate: 'estimates' }[s] || s;
+    return { nav, go: this.go, is: { [s]: true }, menuOpen: this.state.menuOpen, menuClass: this.state.menuOpen ? 'is-open' : '', toggleMenu: () => this.setState({ menuOpen: !this.state.menuOpen }), menuKey: e => { if (e.key === 'Escape') this.setState({ menuOpen: false }); } };
+  }
+}
+</script>
+</body>
+</html>

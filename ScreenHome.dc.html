@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/colors_and_type.css">
+<script src="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/_ds_bundle.js"></script>
+</helmet>
+<div style="width:100%;height:100%;min-width:0;display:flex;flex-direction:column;background:#fff;font-family:var(--font-sans);font-size:13px;line-height:1.4;color:#0F172A;overflow:hidden">
+  <div style="height:52px;flex:none;display:flex;align-items:center;gap:12px;padding:0 20px;border-bottom:1px solid #E2E8F0">
+    <div style="font-size:14px;font-weight:600">Home</div>
+    <div style="font-size:13px;color:#94A3B8">Thursday, Sep 26</div>
+    <div style="flex:1"></div>
+    <div style="height:30px;display:flex;align-items:center;padding:0 10px;border:1px solid #E2E8F0;border-radius:7px;font-size:13px;color:#475569">This week</div>
+    <button onClick="{{ goEstimate }}" style="height:30px;display:flex;align-items:center;gap:6px;padding:0 12px;background:#0F766E;color:#fff;border:0;border-radius:7px;font:600 13px var(--font-sans);cursor:pointer">New estimate</button>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-bottom:1px solid #E2E8F0">
+    <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="5">
+      <div style="padding:14px 20px;border-right:1px solid #E2E8F0;display:flex;flex-direction:column;gap:4px">
+        <div style="font-size:12px;color:#64748B">{{ k.label }}</div>
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font:600 22px var(--font-mono);letter-spacing:-.02em">{{ k.value }}</span><span style="font:500 12px var(--font-mono);color:{{ k.dc }}">{{ k.delta }}</span></div>
+        <div style="font-size:12px;color:#94A3B8">{{ k.sub }}</div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 380px">
+    <div style="display:flex;flex-direction:column;border-right:1px solid #E2E8F0;min-width:0;overflow:auto">
+      <div style="height:44px;flex:none;display:flex;align-items:center;gap:10px;padding:0 20px">
+        <div style="font-size:13px;font-weight:600">Today's route</div>
+        <div style="font:500 12px var(--font-mono);color:#64748B">7 jobs · $4,915</div>
+        <div style="flex:1"></div>
+        <div style="display:flex;gap:2px;padding:2px;background:#F1F5F9;border-radius:7px;font-size:12px">
+          <sc-for list="{{ crewFilters }}" as="f"><button onClick="{{ f.select }}" style="padding:3px 9px;background:{{ f.bg }};border:0;border-radius:5px;font-weight:{{ f.fw }};color:{{ f.fg }};cursor:pointer">{{ f.name }}</button></sc-for>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:64px minmax(0,1.3fr) minmax(0,1.4fr) 80px 112px 80px;gap:0 12px;padding:0 20px;height:30px;align-items:center;border-top:1px solid #E2E8F0;border-bottom:1px solid #E2E8F0;background:#F8FAFC;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#94A3B8">
+        <span>Time</span><span>Client</span><span>Service</span><span>Crew</span><span>Status</span><span style="text-align:right">Amount</span>
+      </div>
+      <sc-for list="{{ jobs }}" as="j" hint-placeholder-count="7">
+        <div onClick="{{ j.open }}" onKeyDown="{{ j.keyOpen }}" role="button" tabindex="0" style="display:grid;grid-template-columns:64px minmax(0,1.3fr) minmax(0,1.4fr) 80px 112px 80px;gap:0 12px;padding:0 20px;height:{{ rowH }};align-items:center;border-bottom:1px solid #F1F5F9;font-size:13px;cursor:pointer">
+          <span style="font:500 12px var(--font-mono);color:#475569">{{ j.t }}</span>
+          <div style="min-width:0;line-height:1.25"><div style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ j.c }}</div><div style="font-size:12px;color:#94A3B8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ j.a }}</div></div>
+          <span style="color:#475569;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ j.s }}</span>
+          <span style="display:flex;align-items:center;gap:6px;color:#475569"><span style="width:7px;height:7px;border-radius:2px;background:{{ j.cc }}"></span>{{ j.crew }}</span>
+          <span><span style="display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 8px;border-radius:5px;font-size:12px;font-weight:500;white-space:nowrap;background:{{ j.bg }};color:{{ j.fg }}"><span style="width:6px;height:6px;border-radius:50%;background:{{ j.fg }}"></span>{{ j.st }}</span></span>
+          <span style="text-align:right;font:500 13px var(--font-mono)">{{ j.amt }}</span>
+        </div>
+      </sc-for>
+      <div style="height:44px;flex:none;display:flex;align-items:center;gap:10px;padding:0 20px;margin-top:8px">
+        <div style="font-size:13px;font-weight:600">Revenue · last 8 weeks</div>
+        <div style="flex:1"></div>
+        <div style="display:flex;gap:12px;font-size:12px;color:#64748B"><span style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:2px;background:#0F766E"></span>Booked</span><span style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:2px;background:#99D5CF"></span>Recurring</span></div>
+      </div>
+      <div style="flex:1;min-height:0;display:flex;align-items:flex-end;gap:14px;padding:0 20px 20px">
+        <sc-for list="{{ bars }}" as="b" hint-placeholder-count="8">
+          <div style="flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;gap:6px">
+            <div style="display:flex;flex-direction:column;gap:2px;height:{{ b.h }}"><div style="flex:{{ b.one }};background:#0F766E;border-radius:4px 4px 0 0"></div><div style="flex:{{ b.rec }};background:#99D5CF;border-radius:0 0 2px 2px"></div></div>
+            <div style="font:500 11px var(--font-mono);color:#94A3B8;text-align:center">{{ b.w }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;min-width:0;background:#FCFDFE;overflow:auto">
+      <div style="height:44px;flex:none;display:flex;align-items:center;gap:8px;padding:0 16px;border-bottom:1px solid #E2E8F0">
+        <div style="font-size:13px;font-weight:600">Needs you</div>
+        <span style="font:600 11px var(--font-mono);background:#FFF1E8;color:#C2410C;padding:1px 6px;border-radius:4px">9</span>
+      </div>
+      <sc-for list="{{ needs }}" as="n" hint-placeholder-count="8">
+        <div onClick="{{ n.open }}" onKeyDown="{{ n.keyOpen }}" role="button" tabindex="0" style="display:flex;gap:10px;padding:11px 16px;border-bottom:1px solid #F1F5F9;cursor:pointer">
+          <span style="flex:none;width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;background:{{ n.bg }};color:{{ n.fg }}"><svg width="14" height="14" viewBox="0 0 24 24" style="fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="{{ n.icon }}"></path></svg></span>
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+            <div style="display:flex;gap:8px;font-size:13px"><span style="flex:1;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ n.title }}</span><span style="font:500 12px var(--font-mono);color:#475569">{{ n.amt }}</span></div>
+            <div style="font-size:12px;color:#64748B">{{ n.sub }}</div>
+          </div>
+          <span style="align-self:center;height:26px;display:flex;align-items:center;padding:0 9px;border:1px solid #E2E8F0;border-radius:6px;background:#fff;font-size:12px;font-weight:600;color:#0F172A">{{ n.cta }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1208,&quot;height&quot;:900},&quot;onOpen&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(screen: string) => void&quot;},&quot;density&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;compact&quot;,&quot;comfortable&quot;],&quot;default&quot;:&quot;compact&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const crew = this.state.crew || 'All crews';
+    const T = {
+      done: ['#F0FDF4', '#15803D'], route: ['#F0FDFA', '#0F766E'], next: ['#F1F5F9', '#475569'],
+      late: ['#FFF1E8', '#C2410C'], paid: ['#F0FDF4', '#15803D'],
+    };
+    const rowH = (this.props.density ?? 'compact') === 'compact' ? '44px' : '56px';
+    const crewC = { 'Crew A': '#0F766E', 'Crew B': '#2563EB', 'Crew C': '#DD6B2F' };
+    const jobs = [
+      ['8:00', 'Dana Whitfield', '4102 Rosedale Ave', 'House wash + gutters', 'Crew A', 'Done', 'done', '$685'],
+      ['8:30', 'Oak Hill HOA', 'Clubhouse · 6500 Hwy 290', 'Pool deck + walkways', 'Crew B', 'Done', 'done', '$1,240'],
+      ['10:15', 'Marcus Pruitt', '1817 Ridgewood Dr', 'Roof soft wash', 'Crew A', 'On site', 'route', '$920'],
+      ['11:00', 'Priya Natarajan', '902 W Mary St', 'Driveway + patio', 'Crew C', 'Running late', 'late', '$340'],
+      ['1:00', 'Tom Beckett', '3310 Duval St', 'House wash', 'Crew B', 'En route', 'route', '$480'],
+      ['2:30', 'Greenway Dental', '11800 Burnet Rd', 'Storefront + signage', 'Crew C', 'Scheduled', 'next', '$610'],
+      ['4:00', 'Lisa Okafor', '4521 Avenue F', 'Fence restore', 'Crew A', 'Scheduled', 'next', '$640'],
+    ].map(([t, c, a, s, crew, st, tone, amt]) => { const open = () => this.props.onOpen?.(c === 'Marcus Pruitt' ? 'client' : 'calendar'); return { t, c, a, s, crew, st, amt, cc: crewC[crew], bg: T[tone][0], fg: T[tone][1], open, keyOpen: e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } } }; }).filter(j => this.state.crew === undefined || this.state.crew === 'All crews' || j.crew === crew);
+    const crewFilters = ['All crews', 'Crew A', 'Crew B', 'Crew C'].map(name => ({ name, bg: name === crew ? '#fff' : 'transparent', fg: name === crew ? '#0F172A' : '#64748B', fw: name === crew ? 600 : 400, select: () => this.setState({ crew: name }) }));
+    const kpis = [
+      { label: 'Booked this week', value: '$18,420', delta: '+12%', dc: '#15803D', sub: '31 jobs' },
+      { label: 'Open estimates', value: '$24,860', delta: '12', dc: '#64748B', sub: '4 viewed, not signed' },
+      { label: 'Win rate · 30d', value: '42%', delta: '+3pt', dc: '#15803D', sub: '61 sent · 26 won' },
+      { label: 'Outstanding', value: '$3,480', delta: '3 late', dc: '#C2410C', sub: 'Oldest 18 days' },
+      { label: 'Recurring MRR', value: '$7,120', delta: '+$340', dc: '#15803D', sub: '84 Suds Club plans' },
+    ];
+    const bars = [[52, 30], [60, 32], [48, 34], [71, 35], [66, 38], [80, 40], [74, 41], [88, 44]].map(([o, r], i) => ({ w: 'W' + (32 + i), h: ((o + r) / 132 * 100).toFixed(0) + '%', one: o, rec: r }));
+    const I = {
+      sign: 'M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z', eye: 'M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12zM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z',
+      card: 'M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zM2 10h20', msg: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z',
+      star: 'm12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z', cal: 'M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z',
+      check: 'M20 6 9 17l-5-5', file: 'M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7zM14 2v4a2 2 0 0 0 2 2h4',
+    };
+    const tone = { teal: ['#F0FDFA', '#0F766E'], orange: ['#FFF1E8', '#C2410C'], slate: ['#F1F5F9', '#475569'], green: ['#F0FDF4', '#15803D'] };
+    const needs = [
+      ['eye', 'teal', 'Hartley residence viewed 3×', '$2,310', 'Estimate · opened 20 min ago', 'Call'],
+      ['eye', 'teal', 'Brookside Apartments', '$6,800', 'Commercial · viewed yesterday', 'Call'],
+      ['card', 'orange', 'Invoice INV-1043 overdue', '$840', 'Ray Delgado · 18 days', 'Remind'],
+      ['card', 'orange', 'Invoice INV-1051 overdue', '$420', 'Pruitt · 6 days', 'Remind'],
+      ['msg', 'slate', 'New lead from website', '—', 'Kara Voss · house + roof', 'Reply'],
+      ['msg', 'slate', 'Text from Priya Natarajan', '—', '"Gate code is 4471"', 'Open'],
+      ['sign', 'green', 'Approve crew timesheet', '—', 'Crew C · 38.5 hrs', 'Review'],
+      ['cal', 'slate', '6 won jobs unscheduled', '$5,120', 'Oldest won 4 days ago', 'Plan'],
+    ].map(([ic, t, title, amt, sub, cta]) => { const open = () => this.props.onOpen?.(ic === 'msg' ? 'inbox' : ic === 'card' ? 'invoices' : ic === 'cal' ? 'calendar' : ic === 'sign' ? 'ops' : 'estimates'); return { icon: I[ic], bg: tone[t][0], fg: tone[t][1], title, amt, sub, cta, open, keyOpen: e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } } }; });
+
+    const filters = [['Owner', 'Anyone', 0], ['Service', 'All', 0], ['Source', 'Web, Referral', 1], ['Created', 'Last 60d', 0]].map(([k, v, on]) => ({ k, v, bd: on ? '#99D5CF' : '#E2E8F0', bg: on ? '#F0FDFA' : '#fff' }));
+    const reps = { HM: '#F97316', JR: '#2563EB', KT: '#0F766E' };
+    const tag = { Residential: tone.slate, Commercial: ['#EFF6FF', '#1D4ED8'], Roof: ['#F5F3FF', '#6D28D9'], 'Holiday': ['#FEF2F2', '#B91C1C'], Fleet: ['#FEFCE8', '#A16207'] };
+    const card = ([n, svc, amt, t, age, rep, stale]) => ({ n, svc, amt, tag: t, tbg: tag[t][0], tfg: tag[t][1], age, ac: stale ? '#C2410C' : '#94A3B8', rep, rc: reps[rep] });
+    const stages = [
+      ['New lead', '#94A3B8', '11', '$9,850', '18%', [['Kara Voss', 'House + roof · web form', '$1,400', 'Residential', '2h', 'HM'], ['Fleetline Logistics', '22 box trucks · monthly', '$3,300', 'Fleet', '5h', 'JR'], ['Ben Adeyemi', 'Driveway + walkway', '$380', 'Residential', '1d', 'KT'], ['Sierra Coffee Co', 'Storefront + patio', '$520', 'Commercial', '2d', 'JR'], ['Wes Harmon', 'Roofline lights', '$1,650', 'Holiday', '3d', 'HM', 1]]],
+      ['Estimate sent', '#2563EB', '9', '$18,240', '34%', [['Hartley residence', 'Best tier · house, roof, deck', '$2,310', 'Residential', '20m', 'HM'], ['Brookside Apartments', 'Breezeways, 4 bldgs', '$6,800', 'Commercial', '1d', 'JR'], ['Nora Lindqvist', 'Soft wash roof', '$1,180', 'Roof', '2d', 'KT'], ['Oakmont Church', 'Parking + sidewalks', '$2,450', 'Commercial', '4d', 'JR', 1], ['Dev Kapoor', 'House wash', '$490', 'Residential', '6d', 'HM', 1]]],
+      ['Follow-up', '#DD6B2F', '7', '$11,730', '22%', [['Rivera family', 'Roof + gutters', '$1,340', 'Roof', '3d', 'KT'], ['Lakeway Medical', 'Quarterly exterior', '$4,200', 'Commercial', '5d', 'JR', 1], ['Joan Mercer', 'Full lights package', '$2,900', 'Holiday', '8d', 'HM', 1], ['Sam Whitaker', 'Fence + deck restore', '$1,020', 'Residential', '9d', 'KT', 1]]],
+      ['Won', '#16A34A', '6', '$12,300', '23%', [['Pruitt residence', 'Better tier', '$1,685', 'Residential', 'today', 'HM'], ['Eastside Brewing', 'Dumpster pad + front', '$760', 'Commercial', '1d', 'JR'], ['Halvorsen', 'Roofline + trees', '$3,100', 'Holiday', '2d', 'HM'], ['Metro Auto Group', 'Lot + 40 vehicles', '$4,800', 'Fleet', '3d', 'JR']]],
+      ['Scheduled', '#0F766E', '5', '$9,120', '17%', [['Dana Whitfield', 'Sep 26 · Crew A', '$685', 'Residential', 'today', 'KT'], ['Oak Hill HOA', 'Sep 26 · Crew B', '$1,240', 'Commercial', 'today', 'JR'], ['Lisa Okafor', 'Sep 26 · Crew A', '$640', 'Residential', 'today', 'HM'], ['Crestview Plaza', 'Oct 2 · Crew B', '$3,950', 'Commercial', '6d', 'JR']]],
+    ].map(([name, c, n, total, pct, cards]) => ({ name, c, n, total, pct, cards: cards.map(card) }));
+
+    const attrs = [
+      ['Phone', '(512) 555-0148', '#0F172A'], ['Email', 'marcus.pruitt@gmail.com', '#0F766E'], ['Address', '1817 Ridgewood Dr, Austin', '#0F172A'],
+      ['Gate / access', 'Side gate, dog inside', '#0F172A'], ['Source', 'Referral · Dana Whitfield', '#0F172A'], ['Owner', 'Hannah Morales', '#0F172A'],
+      ['Preferred', 'Text, mornings', '#0F172A'], ['Last job', 'Jun 12 · House wash', '#0F172A'], ['Review', '5.0 on Google', '#15803D'],
+    ].map(([k, v, c]) => ({ k, v, c }));
+    const tabs = [['Activity', ''], ['Estimates', '4'], ['Jobs', '9'], ['Invoices', '11'], ['Files', '23']].map(([label, n], i) => ({ label, n, bd: i === 0 ? '#0F766E' : 'transparent', fg: i === 0 ? '#0F172A' : '#64748B', fw: i === 0 ? 600 : 500 }));
+    const activity = [
+      ['check', 'green', 'Marcus', 'signed EST-2291 · Better tier', '9:42 AM', 'Deposit $421.25 paid by card ending 4410'],
+      ['eye', 'teal', 'Marcus', 'viewed EST-2291 (2×)', '9:31 AM', ''],
+      ['file', 'slate', 'Hannah Morales', 'sent EST-2291 by text + email', 'Yesterday', ''],
+      ['msg', 'slate', 'Marcus', 'texted', 'Yesterday', '"Can you also look at the roof streaks on the north side?"'],
+      ['cal', 'teal', 'Crew A', 'completed house wash', 'Jun 12', '14 photos · 2.5 hrs on site'],
+      ['star', 'green', 'Elena', 'left a 5-star Google review', 'Jun 13', '"Crew was on time and the house looks brand new."'],
+      ['card', 'orange', 'System', 'INV-1051 is 6 days overdue', 'Sep 20', ''],
+    ].map(([ic, t, who, what, when, detail]) => ({ icon: I[ic], bg: tone[t][0], fg: tone[t][1], who, what, when, detail }));
+    const openItems = [
+      ['EST-2291', 'Roof soft wash + gutters', '$1,685', 'Signed', 'green', 'Needs scheduling'],
+      ['INV-1051', 'Spring wash', '$420', 'Overdue', 'orange', 'Due Sep 20'],
+      ['JOB-3380', 'Fall wash · plan visit', '$0', 'Scheduled', 'teal', 'Oct 14 · Crew A'],
+    ].map(([id, t, amt, st, tn, sub]) => ({ id, t, amt, st, sub, bg: tone[tn][0], fg: tone[tn][1] }));
+
+    const ln = (n, d, q, u, r, t, edit) => ({ n, d, q, u, r, t, qb: edit ? '#0F766E' : 'transparent', qbg: edit ? '#fff' : 'transparent' });
+    const groups = [
+      { name: 'Roof', note: 'Composite shingle · 32° pitch', total: '$980.00', lines: [ln('Roof soft wash', 'SH mix 4%, rinse-free', '2,100', 'sq ft', '$0.38', '$798.00', 1), ln('Moss + lichen treatment', 'North face', '1', 'ea', '$182.00', '$182.00')] },
+      { name: 'Gutters', note: '186 lin ft', total: '$425.00', lines: [ln('Gutter clean-out', 'Hand + blower', '186', 'lin ft', '$1.25', '$232.50'), ln('Gutter face brightening', 'Remove tiger striping', '186', 'lin ft', '$0.95', '$176.70'), ln('Downspout flush', '', '6', 'ea', '$2.63', '$15.80')] },
+      { name: 'Flatwork', note: 'Driveway + walkway', total: '$280.00', lines: [ln('Surface clean · concrete', 'Driveway', '720', 'sq ft', '$0.28', '$201.60'), ln('Post-treat', 'Oil spot + rust', '1', 'ea', '$78.40', '$78.40')] },
+    ];
+    const upsells = [['Window rinse', '$145'], ['Deck seal', '$390'], ['Suds Club · Gold', '$89/mo']].map(([n, p]) => ({ n, p }));
+    const summary = [['Subtotal', '$1,685.00', '#0F172A'], ['Referral discount', '−$75.00', '#15803D'], ['Trip + setup', '$75.00', '#0F172A'], ['Tax (0% service)', '$0.00', '#0F172A']].map(([k, v, c]) => ({ k, v, c }));
+    const sendOpts = [['Text + email', 1], ['Require signature', 1], ['Collect 25% deposit', 1], ['Show Good / Best tiers', 0]].map(([l, on]) => ({ l, bg: on ? '#0F766E' : '#fff', bd: on ? '#0F766E' : '#CBD5E1' }));
+
+    const queue = [
+      ['Pruitt residence', 'Roof + gutters', '$1,685', '4.5h', '#16A34A'], ['Eastside Brewing', 'Dumpster pad', '$760', '2h', '#16A34A'],
+      ['Halvorsen', 'Roofline lights install', '$3,100', '6h', '#B91C1C'], ['Metro Auto Group', 'Lot + 40 vehicles', '$4,800', '8h', '#A16207'],
+      ['Nora Lindqvist', 'Roof soft wash', '$1,180', '3h', '#94A3B8'], ['Kara Voss', 'House + roof', '$1,400', '4h', '#94A3B8'],
+    ].map(([n, s, amt, dur, c]) => ({ n, s, amt, dur, c }));
+    const hours = ['7a', '8a', '9a', '10a', '11a', '12p', '1p', '2p', '3p', '4p', '5p'];
+    const jt = { done: ['#F0FDF4', '#BBF7D0', '#15803D'], live: ['#F0FDFA', '#5EEAD4', '#0F766E'], late: ['#FFF7ED', '#FDBA74', '#C2410C'], next: ['#F8FAFC', '#E2E8F0', '#475569'] };
+    const J = (s, d, time, n, sv, st, k, amt) => ({ l: ((s - 7) / 11 * 100) + '%', w: 'calc(' + (d / 11 * 100) + '% - 4px)', time, n, s: sv, st, amt, bg: jt[k][0], bd: jt[k][1], fg: jt[k][2] });
+    const crews = [
+      { name: 'Crew A', c: '#0F766E', who: 'Luis, Andre', load: '7.5 / 9 hrs', pct: '83%', jobs: [J(8, 2, '8:00–10:00', 'Dana Whitfield', 'House wash + gutters', 'Done', 'done', '$685'), J(10.25, 3, '10:15–1:15', 'Marcus Pruitt', 'Roof soft wash', 'On site', 'live', '$920'), J(16, 1.5, '4:00–5:30', 'Lisa Okafor', 'Fence restore', 'Scheduled', 'next', '$640')] },
+      { name: 'Crew B', c: '#2563EB', who: 'Tyler, Mo', load: '6 / 9 hrs', pct: '67%', jobs: [J(8.5, 3.5, '8:30–12:00', 'Oak Hill HOA', 'Pool deck + walkways', 'Done', 'done', '$1,240'), J(13, 2, '1:00–3:00', 'Tom Beckett', 'House wash', 'En route', 'live', '$480')] },
+      { name: 'Crew C', c: '#DD6B2F', who: 'Jess, Kai', load: '4 / 9 hrs', pct: '44%', jobs: [J(11, 1.5, '11:00–12:30', 'Priya Natarajan', 'Driveway + patio', 'Late 25m', 'late', '$340'), J(14.5, 2, '2:30–4:30', 'Greenway Dental', 'Storefront + signage', 'Scheduled', 'next', '$610')] },
+      { name: 'Lights crew', c: '#B91C1C', who: 'Drew, Sam, Ali', load: '8 / 9 hrs', pct: '89%', jobs: [J(8, 4, '8:00–12:00', 'Joan Mercer', 'Measure + mockup', 'Done', 'done', '—'), J(12.5, 4.5, '12:30–5:00', 'Wes Harmon', 'Roofline install · 210 ft', 'Scheduled', 'next', '$1,650')] },
+    ];
+    const o = (k) => () => this.props.onOpen?.(k);
+    return { goEstimate: o('estimate'), goClients: o('clients'), goEstimates: o('estimates'), goClient: o('client'), crewFilters, rowH, kpis, jobs, bars, needs, filters, stages, attrs, tabs, activity, openItems, groups, upsells, summary, sendOpts, queue, hours, crews };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/colors_and_type.css">
+<script src="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/_ds_bundle.js"></script>
+</helmet>
+<div style="position:relative;width:100%;height:100%;min-width:0;display:flex;flex-direction:column;background:#fff;font-family:var(--font-sans);font-size:13px;line-height:1.4;color:#0F172A;overflow:hidden">
+  <div style="height:52px;flex:none;display:flex;align-items:center;gap:10px;padding:0 20px;border-bottom:1px solid #E2E8F0">
+    <div style="font-size:14px;font-weight:600">Invoices</div>
+    <div style="flex:1"></div>
+    <button type="button" onClick="{{ exportRows }}" style="height:30px;display:flex;align-items:center;padding:0 10px;border:1px solid #E2E8F0;border-radius:7px;color:#334155;background:#fff;font:500 13px var(--font-sans);cursor:pointer">Export</button>
+    <button type="button" onClick="{{ newInvoice }}" style="height:30px;display:flex;align-items:center;padding:0 12px;border:0;background:#0F766E;color:#fff;border-radius:7px;font:600 13px var(--font-sans);cursor:pointer">New invoice</button>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-bottom:1px solid #E2E8F0">
+    <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
+      <div style="padding:14px 20px;border-right:1px solid #E2E8F0;display:flex;flex-direction:column;gap:4px">
+        <div style="font-size:12px;color:#64748B">{{ k.label }}</div>
+        <div style="font:600 22px var(--font-mono);letter-spacing:-.02em;color:{{ k.c }}">{{ k.value }}</div>
+        <div style="font-size:12px;color:#94A3B8">{{ k.sub }}</div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="height:44px;flex:none;display:flex;align-items:center;gap:4px;padding:0 20px;border-bottom:1px solid #E2E8F0;font-size:12px">
+    <sc-for list="{{ views }}" as="v" hint-placeholder-count="5">
+      <button type="button" onClick="{{ v.select }}" aria-pressed="{{ v.on }}" style="height:28px;display:flex;align-items:center;gap:6px;padding:0 10px;border:0;border-radius:6px;background:{{ v.bg }};color:{{ v.fg }};font:{{ v.fw }} 12px var(--font-sans);cursor:pointer">{{ v.l }}<span style="font-family:var(--font-mono);color:#94A3B8">{{ v.n }}</span></button>
+    </sc-for>
+    <div style="flex:1"></div>
+    <button type="button" onClick="{{ remindAll }}" style="height:28px;display:flex;align-items:center;padding:0 9px;border:1px solid #E2E8F0;border-radius:6px;color:#334155;background:#fff;font:12px var(--font-sans);cursor:pointer">Remind all overdue</button>
+  </div>
+  <div style="display:grid;grid-template-columns:80px minmax(0,1.2fr) minmax(0,1.2fr) 64px 64px 80px 80px 104px 70px;gap:0 12px;padding:0 20px;height:30px;align-items:center;border-bottom:1px solid #E2E8F0;background:#F8FAFC;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#94A3B8">
+    <span>Invoice</span><span>Client</span><span>For</span><span>Issued</span><span>Due</span><span style="text-align:right">Amount</span><span style="text-align:right">Balance</span><span>Status</span><span style="text-align:right"></span>
+  </div>
+  <div style="flex:1;min-height:0;overflow:auto">
+    <sc-for list="{{ rows }}" as="r" hint-placeholder-count="15">
+      <div onClick="{{ r.open }}" onKeyDown="{{ r.keyOpen }}" role="button" tabindex="0" aria-label="View {{ r.id }} for {{ r.c }}" style="display:grid;grid-template-columns:80px minmax(0,1.2fr) minmax(0,1.2fr) 64px 64px 80px 80px 104px 70px;gap:0 12px;padding:0 20px;height:40px;align-items:center;border-bottom:1px solid #F1F5F9;cursor:pointer" style-hover="background:#F8FAFC">
+        <span style="font:500 12px var(--font-mono);color:#64748B">{{ r.id }}</span>
+        <span style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.c }}</span>
+        <span style="color:#475569;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.f }}</span>
+        <span style="font:500 12px var(--font-mono);color:#475569">{{ r.is }}</span>
+        <span style="font:500 12px var(--font-mono);color:{{ r.dc }}">{{ r.due }}</span>
+        <span style="text-align:right;font:500 13px var(--font-mono)">{{ r.amt }}</span>
+        <span style="text-align:right;font:600 13px var(--font-mono);color:{{ r.bc }}">{{ r.bal }}</span>
+        <span><span style="height:22px;display:inline-flex;align-items:center;gap:5px;padding:0 7px;border-radius:5px;font-size:12px;font-weight:500;white-space:nowrap;background:{{ r.bg }};color:{{ r.fg }}"><span style="width:6px;height:6px;border-radius:50%;background:{{ r.fg }}"></span>{{ r.st }}</span></span>
+        <span style="display:flex;justify-content:flex-end"><sc-if value="{{ r.act }}"><button type="button" onClick="{{ r.action }}" style="height:24px;display:flex;align-items:center;padding:0 8px;border:1px solid #E2E8F0;border-radius:6px;font:600 12px var(--font-sans);background:#fff;cursor:pointer">{{ r.act }}</button></sc-if><sc-if value="{{ r.m }}"><span style="font:500 11px var(--font-mono);color:#94A3B8">{{ r.m }}</span></sc-if></span>
+      </div>
+    </sc-for>
+  </div>
+  <div style="height:36px;flex:none;display:flex;align-items:center;gap:16px;padding:0 20px;border-top:1px solid #E2E8F0;background:#F8FAFC;font-size:12px;color:#64748B">
+    <span>{{ count }} of 318</span><span style="flex:1"></span><span role="status" aria-live="polite">{{ feedback }}</span><span>Card 71% · ACH 22% · Check 7%</span><span>Processing fees · 30d <span style="font-family:var(--font-mono);color:#0F172A;font-weight:600">$1,108</span></span>
+  </div>
+  <sc-if value="{{ selected }}"><div style="position:absolute;right:20px;top:64px;width:320px;max-height:calc(100% - 100px);overflow:auto;padding:18px;background:#fff;border:1px solid #CBD5E1;border-radius:9px;box-shadow:0 12px 30px rgba(15,23,42,.16);z-index:2"><div style="display:flex;align-items:center;gap:8px"><strong style="font:600 16px var(--font-sans)">{{ selected.id }}</strong><span style="flex:1"></span><button type="button" onClick="{{ closeDetail }}" aria-label="Close invoice detail" style="border:0;background:none;cursor:pointer;font-size:18px">×</button></div><p>{{ selected.c }}</p><p>{{ selected.f }}</p><p>Issued {{ selected.is }} · Due {{ selected.due }}</p><p>Amount {{ selected.amt }} · Balance {{ selected.bal }}</p><p>Status: {{ selected.st }}</p><p style="font-size:12px;color:#64748B">Demo preview only. No invoice or payment is changed.</p></div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1208,&quot;height&quot;:900},&quot;onOpen&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(screen: string) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  state = { view: 'All', selected: null, feedback: '' };
+  renderVals() {
+    const kpis = [['Outstanding', '$3,339', '6 invoices', '#0F172A'], ['Overdue', '$1,299', '3 · oldest 18 days', '#C2410C'], ['Paid · 30d', '$41,920', '+8% vs Aug', '#15803D'], ['Avg days to pay', '3.2', 'Card same-day · ACH 2d', '#0F172A']].map(([label, value, sub, c]) => ({ label, value, sub, c }));
+    const views = [['All', '318'], ['Outstanding', '6'], ['Overdue', '3'], ['Paid', '307'], ['Drafts', '2']].map(([l, n]) => { const on = l === this.state.view; return { l, n, on, bg: on ? '#F1F5F9' : 'transparent', fg: on ? '#0F172A' : '#475569', fw: on ? 600 : 500, select: () => this.setState({ view: l, selected: null }) }; });
+    const S = { Paid: ['#F0FDF4', '#15803D'], Sent: ['#EFF6FF', '#1D4ED8'], Viewed: ['#F0FDFA', '#0F766E'], Overdue: ['#FFF1E8', '#C2410C'], Draft: ['#F1F5F9', '#475569'] };
+    const allRows = [
+      ['INV-1058', 'Dana Whitfield', 'House wash + gutters', 'Sep 26', 'Sep 26', '$685', '$0', 'Paid', '', 'Card'],
+      ['INV-1057', 'Oak Hill HOA', 'Pool deck + walkways', 'Sep 26', 'Oct 26', '$1,240', '$1,240', 'Sent', '', 'Net 30'],
+      ['INV-1056', 'Marcus Pruitt', 'Deposit · EST-2291', 'Sep 25', 'Sep 25', '$421', '$0', 'Paid', '', 'Card'],
+      ['INV-1055', 'Metro Auto Group', 'Deposit · EST-2286', 'Sep 22', 'Sep 22', '$1,200', '$0', 'Paid', '', 'ACH'],
+      ['INV-1054', 'Eastside Brewing', 'Deposit · EST-2290', 'Sep 24', 'Sep 24', '$190', '$190', 'Sent', 'Resend', ''],
+      ['INV-1053', 'Greenway Dental', 'Storefront + signage', 'Sep 19', 'Oct 3', '$610', '$610', 'Viewed', '', 'Net 14'],
+      ['INV-1052', 'Brookside Apartments', 'Breezeways · Q3', 'Aug 30', 'Sep 29', '$6,800', '$0', 'Paid', '', 'ACH'],
+      ['INV-1051', 'Marcus Pruitt', 'Spring wash', 'Sep 6', 'Sep 20', '$420', '$420', 'Overdue 6d', 'Remind', ''],
+      ['INV-1050', 'Lakeway Medical', 'Quarterly exterior', 'Sep 1', 'Oct 1', '$4,200', '$0', 'Paid', '', 'ACH'],
+      ['INV-1049', 'Tom Beckett', 'Plan · Bronze', 'Sep 1', 'Sep 1', '$39', '$0', 'Paid', '', 'Card'],
+      ['INV-1047', 'Chris Donnelly', 'Plan · Bronze', 'Sep 1', 'Sep 8', '$39', '$39', 'Overdue 18d', 'Retry', ''],
+      ['INV-1046', 'Sierra Coffee Co', 'Storefront + patio', 'Aug 26', 'Sep 9', '$520', '$0', 'Paid', '', 'Check'],
+      ['INV-1043', 'Ray Delgado', 'Driveway + house wash', 'Aug 25', 'Sep 8', '$840', '$840', 'Overdue 18d', 'Remind', ''],
+      ['INV-1045', 'Halvorsen family', 'Lights deposit', '—', '—', '$775', '$775', 'Draft', 'Send', ''],
+      ['INV-1044', 'Kim Tran', 'Fence restore', 'Aug 29', 'Sep 12', '$540', '$0', 'Paid', '', 'Card'],
+    ].map(([id, c, f, is, due, amt, bal, st, act, m]) => {
+      const k = st.split(' ')[0];
+      return { id, c, f, is, due, amt, bal, st, act, m, bg: S[k][0], fg: S[k][1], dc: k === 'Overdue' ? '#C2410C' : '#475569', bc: bal === '$0' ? '#CBD5E1' : k === 'Overdue' ? '#C2410C' : '#0F172A' };
+    });
+    const rows = allRows.filter(r => this.state.view === 'All' || (this.state.view === 'Outstanding' ? r.bal !== '$0' && r.st !== 'Draft' : this.state.view === 'Drafts' ? r.st === 'Draft' : r.st.startsWith(this.state.view))).map(r => ({ ...r,
+      open: () => this.setState({ selected: r }),
+      keyOpen: e => { if (e.target === e.currentTarget && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); this.setState({ selected: r }); } },
+      action: e => { e.stopPropagation(); this.setState({ feedback: `${r.act} preview for ${r.id}; no message or payment was sent.` }); }
+    }));
+    const exportRows = () => {
+      const csv = [['Invoice', 'Client', 'For', 'Issued', 'Due', 'Amount', 'Balance', 'Status'], ...rows.map(r => [r.id, r.c, r.f, r.is, r.due, r.amt, r.bal, r.st])].map(line => line.map(v => '"' + String(v).replace(/"/g, '""') + '"').join(',')).join('\r\n');
+      const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+      const link = document.createElement('a'); link.href = url; link.download = 'demo-invoices.csv'; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+      this.setState({ feedback: `Exported ${rows.length} demo invoices.` });
+    };
+    return { kpis, views, rows, count: rows.length, selected: this.state.selected, feedback: this.state.feedback,
+      closeDetail: () => this.setState({ selected: null }),
+      remindAll: () => this.setState({ feedback: 'Reminder preview for 3 overdue invoices; nothing was sent.' }),
+      newInvoice: () => this.setState({ feedback: 'New invoice is a demo preview; no invoice was created.' }), exportRows };
+  }
+}
+</script>
+</body>
+</html>

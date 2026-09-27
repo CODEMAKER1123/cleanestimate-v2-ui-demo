@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/colors_and_type.css">
+<script src="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/_ds_bundle.js"></script>
+</helmet>
+<div style="width:100%;height:100%;min-width:0;display:flex;flex-direction:column;background:#fff;font-family:var(--font-sans);font-size:13px;line-height:1.4;color:#0F172A;overflow:hidden">
+  <div style="height:52px;flex:none;display:flex;align-items:center;gap:10px;padding:0 20px;border-bottom:1px solid #E2E8F0">
+    <div style="font-size:14px;font-weight:600">Price book</div>
+    <span style="height:28px;display:flex;align-items:center;gap:6px;padding:0 9px;border:1px solid #E2E8F0;border-radius:6px;font-weight:600">Residential 2026<svg width="12" height="12" viewBox="0 0 24 24" style="fill:none;stroke:#94A3B8;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"><path d="m6 9 6 6 6-6"></path></svg></span>
+    <span style="font-size:12px;color:#94A3B8">Updated Sep 12 by Hannah</span>
+    <div style="flex:1"></div>
+    <span style="height:30px;display:flex;align-items:center;padding:0 10px;border:1px solid #E2E8F0;border-radius:7px;color:#334155;font-weight:500">Bulk adjust %</span>
+    <span style="height:30px;display:flex;align-items:center;padding:0 12px;background:#0F766E;color:#fff;border-radius:7px;font-weight:600">New item</span>
+  </div>
+  <div style="flex:1;min-height:0;display:grid;grid-template-columns:210px minmax(0,1fr) 340px">
+    <div style="border-right:1px solid #E2E8F0;background:#FCFDFE;display:flex;flex-direction:column;gap:1px;padding:10px 8px;min-height:0;overflow:auto">
+      <sc-for list="{{ cats }}" as="c" hint-placeholder-count="11">
+        <button type="button" onClick="{{ c.select }}" aria-pressed="{{ c.active }}" style="height:30px;display:flex;align-items:center;gap:8px;padding:0 10px;border-radius:6px;background:{{ c.bg }};border:1px solid {{ c.bd }};color:{{ c.fg }};font:{{ c.fw }} 13px var(--font-sans);cursor:pointer;text-align:left"><span style="flex:1">{{ c.l }}</span><span style="font:500 11px var(--font-mono);color:#94A3B8">{{ c.n }}</span></button>
+      </sc-for>
+    </div>
+    <div style="display:flex;flex-direction:column;min-width:0;border-right:1px solid #E2E8F0;overflow:hidden">
+      <div style="height:44px;flex:none;display:flex;align-items:center;gap:8px;padding:0 20px;border-bottom:1px solid #E2E8F0">
+        <input type="search" aria-label="Search price book items" placeholder="Search 75 items" value="{{ search }}" onInput="{{ searchItems }}" style="height:28px;flex:1;max-width:320px;padding:0 9px;border:1px solid #E2E8F0;border-radius:6px;color:#0F172A;font:13px var(--font-sans)">
+        <div style="flex:1"></div>
+        <span style="font-size:12px;color:#64748B">Margin target <span style="font-family:var(--font-mono);color:#0F172A;font-weight:600">55%</span></span>
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,1.5fr) 60px 70px 64px 60px 104px;gap:0 12px;padding:0 20px;height:30px;align-items:center;border-bottom:1px solid #E2E8F0;background:#F8FAFC;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#94A3B8">
+        <span>Item</span><span>Unit</span><span style="text-align:right">Rate</span><span style="text-align:right">Min</span><span style="text-align:right">Cost</span><span>Margin</span>
+      </div>
+      <div style="flex:1;min-height:0;overflow:auto">
+      <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
+        <div style="display:flex;align-items:center;gap:8px;padding:0 20px;height:32px;background:#FCFDFE;border-bottom:1px solid #F1F5F9"><span style="font-weight:600">{{ g.name }}</span><span style="font:500 12px var(--font-mono);color:#94A3B8">{{ g.n }}</span></div>
+        <sc-for list="{{ g.items }}" as="i" hint-placeholder-count="5">
+          <div role="button" tabindex="0" onClick="{{ i.select }}" onKeyDown="{{ i.selectKey }}" aria-label="Select {{ i.n }}" style="display:grid;grid-template-columns:minmax(0,1.5fr) 60px 70px 64px 60px 104px;gap:0 12px;padding:0 20px;height:38px;align-items:center;border-bottom:1px solid #F1F5F9;background:{{ i.bg }};cursor:pointer">
+            <span style="font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ i.n }}</span>
+            <span style="color:#64748B">{{ i.u }}</span>
+            <span style="text-align:right;font:600 13px var(--font-mono)">{{ i.r }}</span>
+            <span style="text-align:right;font:500 12px var(--font-mono);color:#64748B">{{ i.min }}</span>
+            <span style="text-align:right;font:500 12px var(--font-mono);color:#64748B">{{ i.cost }}</span>
+            <span style="display:flex;align-items:center;gap:7px"><span style="flex:1;height:5px;border-radius:3px;background:#E2E8F0;overflow:hidden"><span style="display:block;height:100%;width:{{ i.m }};background:{{ i.mc }}"></span></span><span style="font:600 12px var(--font-mono);color:{{ i.mt }};width:30px;text-align:right">{{ i.m }}</span></span>
+          </div>
+        </sc-for>
+      </sc-for>
+      <sc-if value="{{ empty }}"><div style="padding:20px;color:#64748B">No matching items in this demo.</div></sc-if>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;min-width:0;background:#FCFDFE;min-height:0;overflow:auto">
+      <div style="padding:16px 18px 14px;display:flex;flex-direction:column;gap:4px;border-bottom:1px solid #E2E8F0">
+        <div style="display:flex;align-items:center;gap:8px"><span style="flex:1;font-size:16px;font-weight:700;letter-spacing:-.01em">{{ selected.n }}</span><span style="width:28px;height:16px;border-radius:8px;background:#0F766E;position:relative"><span style="position:absolute;right:2px;top:2px;width:12px;height:12px;border-radius:50%;background:#fff"></span></span></div>
+        <div style="font-size:12px;color:#64748B">{{ selected.category }} · per {{ selected.u }}</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #E2E8F0">
+        <sc-for list="{{ fields }}" as="f" hint-placeholder-count="4">
+          <div style="padding:10px 18px;border-bottom:1px solid #F1F5F9;display:flex;flex-direction:column;gap:3px"><span style="font-size:11px;color:#64748B">{{ f.k }}</span><span style="font:600 14px var(--font-mono)">{{ f.v }}</span></div>
+        </sc-for>
+      </div>
+      <sc-if value="{{ roofDetail }}"><div style="padding:12px 18px 6px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#94A3B8">Cost per sq ft</div>
+      <sc-for list="{{ costs }}" as="c" hint-placeholder-count="3">
+        <div style="display:flex;justify-content:space-between;padding:0 18px;height:26px;align-items:center"><span style="color:#64748B">{{ c.k }}</span><span style="font-family:var(--font-mono)">{{ c.v }}</span></div>
+      </sc-for>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin:4px 18px 0;padding-top:8px;border-top:1px solid #E2E8F0"><span style="font-weight:600">Margin</span><span style="font:700 15px var(--font-mono);color:#15803D">{{ selected.m }}</span></div>
+      <div style="padding:14px 18px 6px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#94A3B8">Multipliers</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 16px;padding:0 18px">
+        <sc-for list="{{ mults }}" as="m" hint-placeholder-count="6">
+          <div style="display:flex;justify-content:space-between;height:26px;align-items:center;border-bottom:1px solid #F1F5F9;font-size:12px"><span style="color:#64748B">{{ m.k }}</span><span style="font-family:var(--font-mono);font-weight:500">{{ m.v }}</span></div>
+        </sc-for>
+      </div>
+      <div style="padding:14px 18px 6px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#94A3B8">Included in tiers</div>
+      <div style="display:flex;gap:6px;padding:0 18px">
+        <sc-for list="{{ tiers }}" as="t" hint-placeholder-count="3">
+          <span style="flex:1;height:30px;display:flex;align-items:center;justify-content:center;gap:6px;border-radius:7px;border:1px solid {{ t.bd }};background:{{ t.bg }};color:{{ t.fg }};font-weight:600;font-size:12px">{{ t.l }}</span>
+        </sc-for>
+      </div></sc-if>
+      <div style="padding:14px 18px 6px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#94A3B8">Client-facing description</div>
+      <div style="margin:0 18px 18px;padding:9px 11px;border:1px solid #E2E8F0;border-radius:8px;background:#fff;color:#475569;font-size:12px;line-height:1.5">{{ description }}</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1208,&quot;height&quot;:900},&quot;onOpen&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(screen: string) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const category = this.state.category || 'All items';
+    const search = this.state.search || '';
+    const cats = [['All items', '75'], ['House wash', '8'], ['Roof', '6'], ['Gutters', '4'], ['Flatwork', '9'], ['Decks & fences', '7'], ['Windows', '3'], ['Commercial', '12'], ['Fleet', '5'], ['Holiday lights', '10'], ['Add-ons', '11']].map(([l, n]) => ({ l, n, active: l === category, bg: l === category ? '#fff' : 'transparent', bd: l === category ? '#D7E0EA' : 'transparent', fg: l === category ? '#0F172A' : '#475569', fw: l === category ? 600 : 500, select: () => this.setState({ category: l }) }));
+    const it = ([n, u, r, min, cost, m]) => ({ n, u, r, min, cost, m: m + '%', mc: m >= 55 ? '#16A34A' : m >= 50 ? '#DD9F32' : '#DD6B2F', mt: m >= 55 ? '#15803D' : '#C2410C' });
+    const groups = [
+      { name: 'Roof', n: '6', items: [['Roof soft wash', 'sq ft', '$0.38', '$450', '$0.15', 61, 1], ['Moss & lichen treatment', 'ea', '$182', '—', '$48', 74], ['Tile roof clean', 'sq ft', '$0.45', '$550', '$0.19', 58], ['Metal roof wash', 'sq ft', '$0.30', '$400', '$0.12', 60], ['Skylight clean', 'ea', '$35', '—', '$8', 77], ['Roof re-treat · 12 mo', 'sq ft', '$0.18', '$250', '$0.07', 61]].map(it) },
+      { name: 'Gutters', n: '4', items: [['Gutter clean-out', 'lin ft', '$1.25', '$175', '$0.52', 58], ['Face brightening', 'lin ft', '$0.95', '$150', '$0.38', 60], ['Downspout flush', 'ea', '$2.63', '—', '$0.70', 73], ['Gutter guard install', 'lin ft', '$9.50', '$600', '$5.10', 46]].map(it) },
+      { name: 'House wash', n: '5', items: [['Soft wash · vinyl', 'sq ft', '$0.22', '$325', '$0.08', 64], ['Stucco / EIFS wash', 'sq ft', '$0.28', '$375', '$0.11', 61], ['Brick wash', 'sq ft', '$0.26', '$350', '$0.10', 62], ['Rust removal', 'ea', '$65', '—', '$14', 78], ['Window rinse', 'ea', '$4', '$145', '$1.40', 65]].map(it) },
+    ];
+    const allItems = groups.flatMap((group) => group.items.map((item) => ({ ...item, category: group.name })));
+    const categoryItems = allItems.filter((item) => category === 'All items' || item.category === category);
+    const selected = categoryItems.find((item) => item.n === this.state.item) || categoryItems[0] || { n: 'No item selected', category, u: 'unit', r: '—', min: '—', cost: '—', m: '—' };
+    const visibleGroups = groups.filter((group) => category === 'All items' || group.name === category).map((group) => ({ ...group, items: group.items.filter((item) => item.n.toLowerCase().includes(search.toLowerCase())).map((item) => { const select = () => this.setState({ item: item.n }); return { ...item, bg: item.n === selected.n ? '#F0FDFA' : 'transparent', select, selectKey: (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); select(); } } }; }) })).filter((group) => group.items.length);
+    const fields = [['Rate', `${selected.r} / ${selected.u}`], ['Min charge', selected.min], ['Unit cost', selected.cost], ['Taxable', 'No']].map(([k, v]) => ({ k, v }));
+    const costs = [['Chemicals (SH 4%)', '$0.06'], ['Labor · 2 crew', '$0.08'], ['Overhead', '$0.01']].map(([k, v]) => ({ k, v }));
+    const mults = [['1 story', '×1.00'], ['≤ 6/12 pitch', '×1.00'], ['2 story', '×1.15'], ['7–9/12', '×1.20'], ['3 story', '×1.35'], ['10+/12', '×1.45']].map(([k, v]) => ({ k, v }));
+    const tiers = [['Good', 0], ['Better ✓', 1], ['Best ✓', 1]].map(([l, on]) => ({ l, bg: on ? '#F0FDFA' : '#fff', bd: on ? '#99D5CF' : '#E2E8F0', fg: on ? '#0F766E' : '#94A3B8' }));
+    return { cats, groups: visibleGroups, empty: visibleGroups.length === 0, search, searchItems: (event) => this.setState({ search: event.target.value }), selected, fields, costs, mults, tiers, roofDetail: selected.n === 'Roof soft wash', description: selected.n === 'Roof soft wash' ? 'Low-pressure soft wash that kills algae, moss, and lichen at the root. Safe for shingles. Streaks fade fully within 2–3 weeks.' : selected.n === 'No item selected' ? 'Select a demo item to see its details.' : `${selected.n} · sample price book item.` };
+  }
+}
+</script>
+</body>
+</html>

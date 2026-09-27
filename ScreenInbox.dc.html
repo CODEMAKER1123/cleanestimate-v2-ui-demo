@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/colors_and_type.css">
+<script src="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/_ds_bundle.js"></script>
+</helmet>
+<div style="width:100%;height:100%;min-width:0;display:flex;flex-direction:column;background:#fff;font-family:var(--font-sans);font-size:13px;line-height:1.4;color:#0F172A;overflow:hidden">
+  <div style="height:52px;flex:none;display:flex;align-items:center;gap:10px;padding:0 20px;border-bottom:1px solid #E2E8F0">
+    <div style="font-size:14px;font-weight:600">Inbox</div>
+    <div style="font:500 12px var(--font-mono);color:#64748B">{{ unreadCount }} unread</div>
+    <div style="flex:1"></div>
+    <div style="display:flex;gap:2px;padding:2px;background:#F1F5F9;border-radius:7px;font-size:12px"><sc-for list="{{ views }}" as="v"><button onClick="{{ v.select }}" style="padding:4px 10px;background:{{ v.bg }};border:0;border-radius:5px;font-weight:{{ v.fw }};color:{{ v.fg }};cursor:pointer">{{ v.name }}</button></sc-for></div>
+    <button onClick="{{ compose }}" style="height:30px;display:flex;align-items:center;padding:0 10px;border:1px solid #E2E8F0;border-radius:7px;color:#334155;font-weight:500;background:#fff;cursor:pointer">Compose</button>
+  </div>
+  <div style="flex:1;min-height:0;display:grid;grid-template-columns:340px minmax(0,1fr) 300px">
+    <div style="border-right:1px solid #E2E8F0;display:flex;flex-direction:column;min-width:0;overflow:auto">
+      <div style="display:flex;gap:4px;padding:10px 12px;border-bottom:1px solid #E2E8F0;flex-wrap:wrap">
+        <sc-for list="{{ chips }}" as="c" hint-placeholder-count="5">
+          <button onClick="{{ c.select }}" style="height:24px;display:flex;align-items:center;gap:5px;padding:0 8px;border:0;border-radius:6px;font-size:12px;font-weight:500;background:{{ c.bg }};color:{{ c.fg }};cursor:pointer">{{ c.l }}<span style="font-family:var(--font-mono);color:{{ c.nc }}">{{ c.n }}</span></button>
+        </sc-for>
+      </div>
+      <sc-for list="{{ convos }}" as="v" hint-placeholder-count="10">
+        <div onClick="{{ v.select }}" onKeyDown="{{ v.keySelect }}" role="button" tabindex="0" style="display:flex;gap:10px;padding:10px 14px;border-bottom:1px solid #F1F5F9;background:{{ v.bg }};cursor:pointer">
+          <span style="flex:none;width:30px;height:30px;border-radius:8px;background:{{ v.ac }};color:#fff;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center">{{ v.ini }}</span>
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+            <div style="display:flex;gap:6px;align-items:center"><span style="flex:1;font-weight:{{ v.fw }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ v.n }}</span><span style="font:500 11px var(--font-mono);color:#94A3B8">{{ v.t }}</span></div>
+            <div style="display:flex;gap:6px;align-items:center"><span style="font-size:11px;font-weight:600;color:{{ v.chc }};white-space:nowrap">{{ v.ch }}</span><span style="flex:1;font-size:12px;color:#64748B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ v.p }}</span><sc-if value="{{ v.unread }}"><span style="width:7px;height:7px;border-radius:50%;background:#0F766E"></span></sc-if></div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:flex;flex-direction:column;min-width:0;border-right:1px solid #E2E8F0">
+      <div style="height:52px;flex:none;display:flex;align-items:center;gap:10px;padding:0 20px;border-bottom:1px solid #E2E8F0">
+        <div style="line-height:1.25"><div style="font-weight:600">{{ selected.n }}</div><div style="font-size:12px;color:#64748B">{{ selected.ch }}</div></div>
+        <span style="height:22px;display:inline-flex;align-items:center;padding:0 7px;border-radius:5px;font-size:12px;font-weight:500;background:#FFF1E8;color:#C2410C">{{ selected.ch }}</span>
+        <div style="flex:1"></div>
+        <button onClick="{{ assign }}" style="height:28px;display:flex;align-items:center;padding:0 9px;border:1px solid #E2E8F0;border-radius:6px;color:#334155;font-weight:500;font-size:12px;background:#fff;cursor:pointer">{{ assignee }}</button>
+        <button onClick="{{ markDone }}" style="height:28px;display:flex;align-items:center;padding:0 9px;border:1px solid #E2E8F0;border-radius:6px;color:#334155;font-weight:500;font-size:12px;background:#fff;cursor:pointer">{{ doneLabel }}</button>
+      </div>
+      <div style="flex:1;min-height:0;display:flex;flex-direction:column;gap:12px;padding:18px 20px;overflow:auto;background:#FCFDFE">
+        <sc-for list="{{ msgs }}" as="m" hint-placeholder-count="6">
+          <div style="display:flex;justify-content:{{ m.j }}">
+            <div style="max-width:72%;display:flex;flex-direction:column;gap:3px;align-items:{{ m.j }}">
+              <div style="padding:8px 11px;border-radius:10px;background:{{ m.bg }};color:{{ m.fg }};border:1px solid {{ m.bd }};font-size:{{ m.fs }};line-height:1.45">{{ m.x }}</div>
+              <div style="font:500 11px var(--font-mono);color:#94A3B8">{{ m.meta }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="flex:none;padding:12px 20px 14px;border-top:1px solid #E2E8F0;display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <sc-for list="{{ quick }}" as="q" hint-placeholder-count="3"><button onClick="{{ q.select }}" style="height:24px;display:flex;align-items:center;padding:0 8px;border:1px solid #E2E8F0;border-radius:6px;font-size:12px;color:#334155;background:#fff;cursor:pointer">{{ q.l }}</button></sc-for>
+        </div>
+        <div style="border:1px solid #CBD5E1;border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:10px">
+          <textarea aria-label="Demo reply" placeholder="Reply by text…" value="{{ draft }}" onInput="{{ editDraft }}" style="resize:vertical;min-height:44px;border:0;font:inherit;color:#0F172A;outline:none"></textarea>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#64748B"><span style="height:24px;display:flex;align-items:center;padding:0 8px;background:#F1F5F9;border-radius:5px;font-weight:600;color:#334155">Text</span><span>Demo only · no message sent</span><span style="flex:1"></span><button onClick="{{ send }}" style="height:28px;display:flex;align-items:center;padding:0 12px;background:#0F766E;color:#fff;border:0;border-radius:6px;font-weight:600;cursor:pointer">Add preview</button></div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;background:#FCFDFE;min-width:0;overflow:auto">
+      <div style="padding:16px;display:flex;flex-direction:column;gap:12px;border-bottom:1px solid #E2E8F0">
+        <div style="display:flex;align-items:center;gap:10px"><span style="width:36px;height:36px;border-radius:9px;background:#FFF1E8;color:#C2410C;font-weight:700;display:flex;align-items:center;justify-content:center">{{ selected.ini }}</span><div style="line-height:1.3"><div style="font-size:15px;font-weight:700">{{ selected.n }}</div><div style="font-size:12px;color:#64748B">{{ selected.ch }} · demo</div></div></div>
+        <div style="display:flex;gap:6px"><button onClick="{{ goEstimate }}" style="flex:1;height:30px;display:flex;align-items:center;justify-content:center;background:#0F766E;color:#fff;border:0;border-radius:7px;font-weight:600;cursor:pointer">Create estimate</button><button onClick="{{ goClient }}" style="height:30px;display:flex;align-items:center;padding:0 10px;border:1px solid #E2E8F0;border-radius:7px;background:#fff;color:#334155;font-weight:500;cursor:pointer">Client</button></div>
+        <sc-if value="{{ detailNotice }}"><div role="status" style="font-size:12px;color:#64748B">{{ detailNotice }}</div></sc-if>
+      </div>
+      <div style="padding:12px 16px 4px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#94A3B8">Details</div>
+      <sc-for list="{{ info }}" as="r" hint-placeholder-count="6">
+        <div style="display:grid;grid-template-columns:84px minmax(0,1fr);gap:8px;padding:0 16px;height:30px;align-items:center"><span style="color:#64748B">{{ r.k }}</span><span style="font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.v }}</span></div>
+      </sc-for>
+      <sc-if value="{{ selected.isKara }}">
+      <div style="padding:14px 16px 6px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#94A3B8">Request</div>
+      <div style="margin:0 16px;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;background:#fff;display:flex;flex-direction:column;gap:6px;font-size:12px">
+        <div style="font-size:13px;font-weight:600">House wash + roof soft wash</div>
+        <div style="color:#475569">2 story, ~3,000 sq ft. Black streaks on north roof face.</div>
+        <div style="display:flex;justify-content:space-between;color:#94A3B8"><span>Website form · 10:02 AM</span><span>3 photos</span></div>
+      </div>
+      <div style="padding:14px 16px 6px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#94A3B8">Instant estimate</div>
+      <div style="margin:0 16px;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;background:#fff;display:flex;flex-direction:column;gap:4px">
+        <div style="font:700 18px var(--font-mono);letter-spacing:-.02em">$1,250–$1,550</div>
+        <div style="font-size:12px;color:#64748B">Satellite measure · 2,960 sq ft roof · 6/12 pitch</div>
+      </div>
+      </sc-if>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1208,&quot;height&quot;:900},&quot;onOpen&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(screen: string) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const channel = this.state.channel || 'All', view = this.state.view || 'Everything';
+    const chips = [['All', '24'], ['Texts', '12'], ['Email', '6'], ['Web leads', '4'], ['Calls', '2']].map(([l, n]) => ({ l, n, bg: l === channel ? '#0F172A' : '#F1F5F9', fg: l === channel ? '#fff' : '#334155', nc: '#94A3B8', select: () => this.setState({ channel: l }) }));
+    const views = ['Everything', 'Unread', 'Assigned to me'].map(name => ({ name, bg: name === view ? '#fff' : 'transparent', fw: name === view ? 600 : 400, fg: name === view ? '#0F172A' : '#64748B', select: () => this.setState({ view: name }) }));
+    const chc = { Text: '#0F766E', Email: '#2563EB', 'Web lead': '#C2410C', Call: '#6D28D9' };
+    const convos = [
+      ['KV', 'Kara Voss', '2m', 'Web lead', 'Perfect. Do you also do gutters?', 1, '#C2410C', 1],
+      ['PN', 'Priya Natarajan', '18m', 'Text', 'Gate code is 4471', 1, '#0F766E'],
+      ['BA', 'Brookside Apartments', '1h', 'Email', 'Can we move the start to 7am?', 1, '#2563EB'],
+      ['RD', 'Ray Delgado', '2h', 'Text', 'Paid — sorry for the delay', 0, '#64748B'],
+      ['MP', 'Marcus Pruitt', '3h', 'Text', 'Can you also look at the roof streaks…', 0, '#0F766E'],
+      ['?', '(512) 555-0177', '4h', 'Call', 'Missed call · voicemail 0:42', 1, '#6D28D9'],
+      ['FL', 'Fleetline Logistics', 'Yday', 'Web lead', '22 box trucks, monthly wash', 1, '#A16207'],
+      ['JM', 'Joan Mercer', 'Yday', 'Email', 'Lights look amazing this year', 0, '#B91C1C'],
+      ['TB', 'Tom Beckett', 'Mon', 'Text', 'See you at 1', 0, '#2563EB'],
+      ['LO', 'Lisa Okafor', 'Mon', 'Text', 'Thanks, all set', 0, '#64748B'],
+    ].map(([ini, n, t, ch, p, unread, ac]) => { const select = () => this.setState({ selected: n, read: { ...this.state.read, [n]: true }, draft: '', detailNotice: '' }); return { ini, n, t, ch, p, unread: !!unread && !this.state.read?.[n], ac, chc: chc[ch], fw: unread && !this.state.read?.[n] ? 700 : 500, bg: n === (this.state.selected || 'Kara Voss') ? '#F0FDFA' : 'transparent', select, keySelect: e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(); } } }; });
+    const selected = convos.find(v => v.n === (this.state.selected || 'Kara Voss')) || convos[0];
+    selected.isKara = selected.n === 'Kara Voss';
+    const visibleConvos = convos.filter(v => (channel === 'All' || (channel === 'Texts' ? v.ch === 'Text' : channel === 'Web leads' ? v.ch === 'Web lead' : channel === 'Calls' ? v.ch === 'Call' : v.ch === channel)) && (view !== 'Unread' || v.unread) && (view !== 'Assigned to me' || ['Kara Voss', 'Marcus Pruitt', 'Joan Mercer'].includes(v.n)));
+    const IN = { j: 'flex-start', bg: '#fff', fg: '#0F172A', bd: '#E2E8F0', fs: '13px' };
+    const OUT = { j: 'flex-end', bg: '#0F766E', fg: '#fff', bd: '#0F766E', fs: '13px' };
+    const SYS = { j: 'center', bg: '#F1F5F9', fg: '#475569', bd: '#F1F5F9', fs: '12px' };
+    const msgs = [
+      [IN, 'Hi — looking for a quote on a house wash and roof soft wash. 2 story, about 3,000 sq ft. North side has black streaks on the roof.', 'Kara · 10:02 AM · Web form'],
+      [SYS, 'Instant estimate generated · $1,250–$1,550', '10:02 AM'],
+      [OUT, "Hi Kara, this is Hannah with Rolling Suds. Based on satellite measurements you're looking at $1,250–$1,550 for both. Can I stop by Thursday to confirm?", 'Hannah · 10:06 AM · Delivered'],
+      [IN, 'Thursday works. Anytime after 3.', 'Kara · 10:11 AM'],
+      [OUT, "Booked you for Thu 3:30 PM. You'll get a reminder the day before.", 'Hannah · 10:12 AM · Read'],
+      [IN, 'Perfect. Do you also do gutters?', 'Kara · 10:14 AM'],
+    ].map(([s, x, meta]) => ({ ...s, x, meta }));
+    const visibleMsgs = selected.n === 'Kara Voss' ? msgs : [{ ...IN, x: selected.p, meta: selected.n + ' · ' + selected.t + ' · ' + selected.ch }];
+    for (const x of this.state.previews?.[selected.n] || []) visibleMsgs.push({ ...OUT, x, meta: 'Local preview · not sent' });
+    const quick = ['Add gutters to estimate', 'Send estimate link', 'Book a time'].map(l => ({ l, select: () => this.setState({ draft: l }) }));
+    const info = (selected.n === 'Kara Voss' ? [['Phone', '(512) 555-0193'], ['Email', 'kara.voss@outlook.com'], ['Address', '2208 Hartford Rd'], ['Source', 'Google Ads'], ['Owner', 'Hannah Morales'], ['Visit', 'Thu 3:30 PM']] : [['Channel', selected.ch], ['Last activity', selected.t], ['Preview', selected.p]]).map(([k, v]) => ({ k, v }));
+    const openWorkedDetail = (screen, label) => selected.n === 'Marcus Pruitt' ? this.props.onOpen?.(screen) : this.setState({ detailNotice: `${label} detail is unavailable for ${selected.n} in this demo.` });
+    return { chips, views, convos: visibleConvos, selected, detailNotice: this.state.detailNotice || '', unreadCount: convos.filter(v => v.unread).length, msgs: visibleMsgs, quick, info, draft: this.state.draft || '', editDraft: e => this.setState({ draft: e.target.value }), send: () => { const x = this.state.draft?.trim(); if (x) this.setState({ previews: { ...this.state.previews, [selected.n]: [...(this.state.previews?.[selected.n] || []), x] }, draft: '' }); }, compose: () => this.setState({ draft: '', selected: 'Kara Voss', detailNotice: '' }), assign: () => this.setState({ assigned: !this.state.assigned }), assignee: this.state.assigned ? 'Assigned to me' : 'Assign', markDone: () => this.setState({ done: { ...this.state.done, [selected.n]: !this.state.done?.[selected.n] } }), doneLabel: this.state.done?.[selected.n] ? 'Reopen' : 'Mark done', goEstimate: () => openWorkedDetail('estimate', 'Estimate'), goClient: () => openWorkedDetail('client', 'Client') };
+  }
+}
+</script>
+</body>
+</html>

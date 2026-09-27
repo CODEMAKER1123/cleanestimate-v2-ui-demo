@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/colors_and_type.css">
+<script src="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/_ds_bundle.js"></script>
+</helmet>
+<div style="width:100%;height:100%;min-width:0;display:flex;flex-direction:column;background:#fff;font-family:var(--font-sans);font-size:13px;line-height:1.4;color:#0F172A;overflow:hidden">
+  <div style="height:52px;flex:none;display:flex;align-items:center;gap:10px;padding:0 20px;border-bottom:1px solid #E2E8F0">
+    <div style="font-size:14px;font-weight:600">Clients</div>
+    <div style="font:500 12px var(--font-mono);color:#64748B">1,284</div>
+    <div style="flex:1"></div>
+    <button onClick="{{ importClients }}" style="height:30px;display:flex;align-items:center;padding:0 10px;border:1px solid #E2E8F0;border-radius:7px;color:#334155;font-weight:500;background:#fff;cursor:pointer">Import</button>
+    <button onClick="{{ newClient }}" style="height:30px;display:flex;align-items:center;padding:0 12px;background:#0F766E;color:#fff;border:0;border-radius:7px;font-weight:600;cursor:pointer">New client</button>
+  </div>
+  <div style="height:44px;flex:none;display:flex;align-items:center;gap:4px;padding:0 20px;border-bottom:1px solid #E2E8F0;font-size:12px">
+    <sc-for list="{{ views }}" as="v" hint-placeholder-count="5">
+      <button onClick="{{ v.select }}" style="height:28px;display:flex;align-items:center;gap:6px;padding:0 10px;border:0;border-radius:6px;background:{{ v.bg }};color:{{ v.fg }};font-weight:{{ v.fw }};cursor:pointer">{{ v.l }}<span style="font-family:var(--font-mono);color:#94A3B8">{{ v.n }}</span></button>
+    </sc-for>
+    <button onClick="{{ addView }}" style="height:28px;display:flex;align-items:center;padding:0 10px;color:#64748B;border:0;background:#fff;cursor:pointer">+ View</button>
+    <div style="flex:1"></div>
+    <button onClick="{{ changeFilter }}" style="height:28px;display:flex;align-items:center;padding:0 9px;border:1px solid #E2E8F0;border-radius:6px;color:#334155;background:#fff;cursor:pointer">{{ filterLabel }}</button>
+    <button onClick="{{ changeSort }}" style="height:28px;display:flex;align-items:center;padding:0 9px;border:1px solid #E2E8F0;border-radius:6px;color:#334155;background:#fff;cursor:pointer">{{ sortLabel }}</button>
+    <input aria-label="Search clients" placeholder="Search clients" value="{{ search }}" onInput="{{ editSearch }}" style="height:28px;width:200px;box-sizing:border-box;padding:0 9px;border:1px solid #E2E8F0;border-radius:6px;color:#0F172A;font:inherit">
+  </div>
+  <div style="display:grid;grid-template-columns:16px minmax(0,1.6fr) 100px 124px minmax(0,1fr) 90px 80px 84px 90px 28px;gap:0 12px;padding:0 20px;height:30px;align-items:center;border-bottom:1px solid #E2E8F0;background:#F8FAFC;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#94A3B8">
+    <span style="width:14px;height:14px;border-radius:4px;border:1.5px solid #CBD5E1;box-sizing:border-box;background:#fff"></span><span>Name</span><span>Type</span><span>Phone</span><span>Area</span><span style="text-align:right">Lifetime</span><span>Last job</span><span>Next visit</span><span>Plan</span><span></span>
+  </div>
+  <div style="flex:1;min-height:0;overflow:auto">
+    <sc-for list="{{ rows }}" as="r" hint-placeholder-count="17">
+      <div onClick="{{ r.select }}" onKeyDown="{{ r.keySelect }}" role="button" tabindex="0" style="display:grid;grid-template-columns:16px minmax(0,1.6fr) 100px 124px minmax(0,1fr) 90px 80px 84px 90px 28px;gap:0 12px;padding:0 20px;height:40px;align-items:center;border-bottom:1px solid #F1F5F9;background:{{ r.bg }};cursor:pointer" style-hover="background:#F8FAFC">
+        <span style="width:14px;height:14px;border-radius:4px;border:1.5px solid #CBD5E1;box-sizing:border-box"></span>
+        <span style="display:flex;align-items:center;gap:9px;min-width:0"><span style="flex:none;width:24px;height:24px;border-radius:6px;background:{{ r.abg }};color:{{ r.afg }};font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ r.ini }}</span><span style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.n }}</span></span>
+        <span><span style="height:22px;display:inline-flex;align-items:center;padding:0 7px;border-radius:5px;font-size:12px;font-weight:500;background:{{ r.tbg }};color:{{ r.tfg }}">{{ r.type }}</span></span>
+        <span style="font:500 12px var(--font-mono);color:#475569">{{ r.ph }}</span>
+        <span style="color:#475569;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.area }}</span>
+        <span style="text-align:right;font:500 13px var(--font-mono)">{{ r.lt }}</span>
+        <span style="font:500 12px var(--font-mono);color:#475569">{{ r.last }}</span>
+        <span style="font:500 12px var(--font-mono);color:{{ r.nc }}">{{ r.next }}</span>
+        <span style="display:flex;align-items:center;gap:6px;color:#334155;white-space:nowrap"><span style="width:7px;height:7px;border-radius:50%;background:{{ r.pc }}"></span>{{ r.plan }}</span>
+        <span style="width:22px;height:22px;border-radius:50%;background:{{ r.rc }};color:#fff;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center">{{ r.rep }}</span>
+      </div>
+    </sc-for>
+    <sc-if value="{{ empty }}"><div style="padding:20px;color:#64748B">No matching clients in this demo sample.</div></sc-if>
+  </div>
+  <div style="height:36px;flex:none;display:flex;align-items:center;gap:16px;padding:0 20px;border-top:1px solid #E2E8F0;background:#F8FAFC;font-size:12px;color:#64748B">
+    <span>{{ resultCount }} of 1,284</span><span>{{ selectedLabel }}</span><button onClick="{{ openSelected }}" style="border:0;background:transparent;color:#0F766E;font:inherit;cursor:pointer">{{ openLabel }}</button><span style="flex:1"></span><span>Lifetime total <span style="font-family:var(--font-mono);color:#0F172A;font-weight:600">$412,380</span></span><span>Avg <span style="font-family:var(--font-mono);color:#0F172A;font-weight:600">$321</span></span>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1208,&quot;height&quot;:900},&quot;onOpen&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(screen: string) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const view = this.state.view || 'All clients', filter = this.state.filter || 'All types', sort = this.state.sort || 'Last job';
+    const views = [['All clients', '1,284'], ['Suds Club', '84'], ['Commercial', '62'], ['Lapsed 12mo+', '211'], ['Missing email', '38']].map(([l, n]) => ({ l, n, bg: l === view ? '#F1F5F9' : 'transparent', fg: l === view ? '#0F172A' : '#475569', fw: l === view ? 600 : 500, select: () => this.setState({ view: l }) }));
+    const T = { Residential: ['#F1F5F9', '#475569'], Commercial: ['#EFF6FF', '#1D4ED8'], Fleet: ['#FEFCE8', '#A16207'], Lead: ['#FFF1E8', '#C2410C'] };
+    const A = { Residential: ['#CCFBF1', '#0F766E'], Commercial: ['#DBEAFE', '#1D4ED8'], Fleet: ['#FEF9C3', '#A16207'], Lead: ['#FFEDD5', '#C2410C'] };
+    const P = { Gold: '#CA8A04', Silver: '#94A3B8', Bronze: '#C2410C', Lights: '#B91C1C', Commercial: '#2563EB', Fleet: '#A16207', '—': '#E2E8F0' };
+    const rc = { HM: '#F97316', JR: '#2563EB', KT: '#0F766E' };
+    const rows = [
+      ['Marcus & Elena Pruitt', 'Residential', '(512) 555-0148', 'Allandale', '$4,860', 'Jun 12', 'Oct 14', 'Gold', 'HM'],
+      ['Oak Hill HOA', 'Commercial', '(512) 555-0112', 'Oak Hill', '$18,240', 'Today', 'Dec 5', 'Commercial', 'JR'],
+      ['Dana Whitfield', 'Residential', '(512) 555-0131', 'Rosedale', '$2,145', 'Today', 'Mar 10', 'Silver', 'KT'],
+      ['Brookside Apartments', 'Commercial', '(512) 555-0190', 'Riverside', '$31,600', 'Aug 30', 'Oct 3', 'Commercial', 'JR'],
+      ['Priya Natarajan', 'Residential', '(512) 555-0166', 'Hyde Park', '$980', 'Today', '—', '—', 'KT'],
+      ['Tom Beckett', 'Residential', '(512) 555-0104', 'Bouldin Creek', '$1,440', 'Today', 'Apr 2', 'Bronze', 'HM'],
+      ['Greenway Dental', 'Commercial', '(512) 555-0158', 'Crestview', '$3,660', 'Today', 'Jan 8', '—', 'JR'],
+      ['Lisa Okafor', 'Residential', '(512) 555-0122', 'Cherrywood', '$1,280', 'Today', '—', '—', 'HM'],
+      ['Ray Delgado', 'Residential', '(512) 555-0185', 'Mueller', '$2,620', 'Sep 8', 'Nov 18', 'Silver', 'KT'],
+      ['Joan Mercer', 'Residential', '(512) 555-0139', 'Tarrytown', '$6,900', 'Nov 30', 'Nov 20', 'Lights', 'HM'],
+      ['Lakeway Medical', 'Commercial', '(512) 555-0174', 'Lakeway', '$22,800', 'Jul 22', 'Oct 21', 'Commercial', 'JR'],
+      ['Metro Auto Group', 'Fleet', '(512) 555-0101', 'North Lamar', '$14,400', 'Sep 19', 'Oct 17', 'Fleet', 'JR'],
+      ['Halvorsen family', 'Residential', '(512) 555-0127', 'Barton Hills', '$5,340', 'Dec 1', 'Nov 22', 'Lights', 'HM'],
+      ['Eastside Brewing', 'Commercial', '(512) 555-0163', 'East Cesar Chavez', '$1,520', 'Mar 14', 'Oct 1', '—', 'JR'],
+      ['Sam Whitaker', 'Residential', '(512) 555-0142', 'Windsor Park', '$760', 'May 3', '—', '—', 'KT'],
+      ['Nora Lindqvist', 'Lead', '(512) 555-0118', 'Zilker', '$0', '—', '—', '—', 'KT'],
+      ['Kara Voss', 'Lead', '(512) 555-0193', 'Allandale', '$0', '—', 'Thu', '—', 'HM'],
+    ].concat(this.state.custom || []).map(([n, type, ph, area, lt, last, next, plan, rep]) => ({
+      n, type, ph, area, lt, last, next, plan, rep, rc: rc[rep], pc: P[plan],
+      ini: n.split(/[\s&]+/).filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase(),
+      tbg: T[type][0], tfg: T[type][1], abg: A[type][0], afg: A[type][1], nc: next === '—' ? '#CBD5E1' : '#0F172A',
+    }));
+    const search = (this.state.search || '').toLowerCase();
+    const visible = rows.filter(r => (view === 'All clients' || view === 'Suds Club' && ['Gold', 'Silver', 'Bronze'].includes(r.plan) || view === 'Commercial' && r.type === 'Commercial') && (filter === 'All types' || r.type === filter) && (!search || [r.n, r.ph, r.area].some(x => x.toLowerCase().includes(search))));
+    if (sort === 'Name') visible.sort((a, b) => a.n.localeCompare(b.n));
+    if (sort === 'Lifetime') visible.sort((a, b) => Number(b.lt.replace(/[$,]/g, '')) - Number(a.lt.replace(/[$,]/g, '')));
+    for (const r of visible) { r.bg = r.n === this.state.selected ? '#F0FDFA' : 'transparent'; r.select = () => this.setState({ selected: r.n }); r.keySelect = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); r.select(); } }; }
+    const selected = rows.find(r => r.n === this.state.selected);
+    return { views, rows: visible, empty: !visible.length, search: this.state.search || '', editSearch: e => this.setState({ search: e.target.value }), resultCount: visible.length, selectedLabel: selected?.n || '', openLabel: selected?.n === 'Marcus & Elena Pruitt' ? 'Open client' : '', openSelected: () => { if (selected?.n === 'Marcus & Elena Pruitt') this.props.onOpen?.('client'); }, filterLabel: filter === 'All types' ? 'Filter' : filter, changeFilter: () => this.setState({ filter: ['All types', 'Residential', 'Commercial', 'Lead', 'Fleet'][(['All types', 'Residential', 'Commercial', 'Lead', 'Fleet'].indexOf(filter) + 1) % 5] }), sortLabel: `Sort: ${sort}`, changeSort: () => this.setState({ sort: ['Last job', 'Name', 'Lifetime'][(['Last job', 'Name', 'Lifetime'].indexOf(sort) + 1) % 3] }), addView: () => window.alert('Saved views are unavailable in this local demo.'), importClients: () => window.alert('Import is unavailable in this local demo.'), newClient: () => { const n = window.prompt('Client name'); if (n?.trim()) this.setState({ custom: [...(this.state.custom || []), [n.trim(), 'Lead', '—', '—', '$0', '—', '—', '—', 'HM']], selected: n.trim(), view: 'All clients' }); } };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/colors_and_type.css">
+<script src="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/_ds_bundle.js"></script>
+</helmet>
+<div style="width:100%;height:100%;min-width:0;display:flex;flex-direction:column;background:#fff;font-family:var(--font-sans);font-size:13px;line-height:1.4;color:#0F172A;overflow:auto">
+  <div style="height:52px;flex:none;display:flex;align-items:center;gap:10px;padding:0 20px;border-bottom:1px solid #E2E8F0">
+    <div style="font-size:14px;font-weight:600">Reports</div>
+    <div style="font:500 12px var(--font-mono);color:#64748B">{{ period }}</div>
+    <div style="flex:1"></div>
+    <div style="display:flex;gap:2px;padding:2px;background:#F1F5F9;border-radius:7px;font-size:12px"><sc-for list="{{ ranges }}" as="r"><button type="button" onClick="{{ r.choose }}" aria-pressed="{{ r.on }}" style="padding:4px 10px;border:0;border-radius:5px;background:{{ r.bg }};color:{{ r.fg }};font:{{ r.fw }} 12px var(--font-sans);box-shadow:{{ r.shadow }};cursor:pointer">{{ r.label }}</button></sc-for></div>
+    <button type="button" onClick="{{ exportCsv }}" style="height:30px;display:flex;align-items:center;padding:0 10px;border:1px solid #E2E8F0;border-radius:7px;color:#334155;background:#fff;font:500 13px var(--font-sans);cursor:pointer">Export CSV</button>
+  </div>
+  <sc-if value="{{ custom }}"><div style="display:flex;align-items:center;gap:8px;padding:6px 20px;border-bottom:1px solid #E2E8F0;font-size:12px"><label>From <input type="date" value="{{ start }}" onChange="{{ setStart }}"></label><label>To <input type="date" value="{{ end }}" onChange="{{ setEnd }}"></label></div></sc-if>
+  <div role="status" aria-live="polite" style="min-height:0;padding:0 20px;font-size:12px;color:#64748B">{{ feedback }}</div>
+  <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-bottom:1px solid #E2E8F0">
+    <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="5">
+      <div style="padding:14px 20px;border-right:1px solid #E2E8F0;display:flex;flex-direction:column;gap:4px">
+        <div style="font-size:12px;color:#64748B">{{ k.label }}</div>
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font:600 22px var(--font-mono);letter-spacing:-.02em">{{ k.value }}</span><span style="font:500 12px var(--font-mono);color:#15803D">{{ k.delta }}</span></div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="flex:1;min-height:650px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr) minmax(0,1fr)">
+    <div style="border-right:1px solid #E2E8F0;border-bottom:1px solid #E2E8F0;padding:14px 20px;display:flex;flex-direction:column;gap:10px;min-width:0">
+      <div style="display:flex;align-items:baseline;gap:8px"><span style="font-weight:600">Revenue by service</span><span style="flex:1"></span><span style="font:500 12px var(--font-mono);color:#64748B">{{ revenueTotal }}</span></div>
+      <sc-for list="{{ svc }}" as="s" hint-placeholder-count="7">
+        <div style="display:grid;grid-template-columns:110px minmax(0,1fr) 70px;gap:10px;align-items:center;height:22px"><span style="color:#475569;white-space:nowrap">{{ s.n }}</span><span style="height:14px;background:#F1F5F9;border-radius:3px;overflow:hidden"><span style="display:block;height:100%;width:{{ s.w }};background:#0F766E;border-radius:3px"></span></span><span style="text-align:right;font:500 12px var(--font-mono)">{{ s.v }}</span></div>
+      </sc-for>
+    </div>
+    <div style="border-bottom:1px solid #E2E8F0;padding:14px 20px;display:flex;flex-direction:column;gap:10px;min-width:0;background:#FCFDFE">
+      <div style="display:flex;align-items:baseline;gap:8px"><span style="font-weight:600">Estimate funnel</span><span style="flex:1"></span><span style="font-size:12px;color:#64748B">Median time to sign <span style="font-family:var(--font-mono);color:#0F172A;font-weight:600">1.6 days</span></span></div>
+      <sc-for list="{{ funnel }}" as="f" hint-placeholder-count="4">
+        <div style="display:grid;grid-template-columns:70px minmax(0,1fr) 90px;gap:10px;align-items:center;height:34px">
+          <span style="color:#475569">{{ f.n }}</span>
+          <span style="height:30px;display:flex;align-items:center"><span style="height:100%;width:{{ f.w }};background:{{ f.c }};border-radius:5px;display:flex;align-items:center;padding-left:10px;box-sizing:border-box;color:#fff;font:600 13px var(--font-mono)">{{ f.v }}</span></span>
+          <span style="text-align:right;font:500 12px var(--font-mono);color:#64748B">{{ f.p }}</span>
+        </div>
+      </sc-for>
+      <div style="font-size:12px;color:#64748B;margin-top:auto">Biggest drop: viewed → signed. The follow-up automation recovered {{ recovered }} of those.</div>
+    </div>
+    <div style="border-right:1px solid #E2E8F0;display:flex;flex-direction:column;min-width:0;background:#FCFDFE">
+      <div style="height:42px;flex:none;display:flex;align-items:center;padding:0 20px;font-weight:600">Lead sources</div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) 50px 44px 50px 80px 60px;gap:0 10px;padding:0 20px;height:28px;align-items:center;border-top:1px solid #E2E8F0;border-bottom:1px solid #E2E8F0;background:#F8FAFC;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#94A3B8"><span>Source</span><span style="text-align:right">Leads</span><span style="text-align:right">Won</span><span style="text-align:right">Close</span><span style="text-align:right">Revenue</span><span style="text-align:right">$/lead</span></div>
+      <sc-for list="{{ sources }}" as="s" hint-placeholder-count="6">
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 50px 44px 50px 80px 60px;gap:0 10px;padding:0 20px;height:34px;align-items:center;border-bottom:1px solid #F1F5F9;font:500 12px var(--font-mono)">
+          <span style="font:500 13px var(--font-sans)">{{ s.n }}</span><span style="text-align:right">{{ s.l }}</span><span style="text-align:right">{{ s.w }}</span><span style="text-align:right;color:{{ s.cc }};font-weight:600">{{ s.c }}</span><span style="text-align:right">{{ s.r }}</span><span style="text-align:right;color:#64748B">{{ s.cpl }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:flex;flex-direction:column;min-width:0">
+      <div style="height:42px;flex:none;display:flex;align-items:center;padding:0 20px;font-weight:600">Crew productivity</div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) 44px 80px 64px 64px 70px;gap:0 10px;padding:0 20px;height:28px;align-items:center;border-top:1px solid #E2E8F0;border-bottom:1px solid #E2E8F0;background:#F8FAFC;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#94A3B8"><span>Crew</span><span style="text-align:right">Jobs</span><span style="text-align:right">Revenue</span><span style="text-align:right">$/hr</span><span style="text-align:right">On time</span><span style="text-align:right">Callbacks</span></div>
+      <sc-for list="{{ crews }}" as="c" hint-placeholder-count="4">
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 44px 80px 64px 64px 70px;gap:0 10px;padding:0 20px;height:38px;align-items:center;border-bottom:1px solid #F1F5F9;font:500 12px var(--font-mono)">
+          <span style="display:flex;align-items:center;gap:7px;font:600 13px var(--font-sans)"><span style="width:8px;height:8px;border-radius:2px;background:{{ c.c }}"></span>{{ c.n }}</span><span style="text-align:right">{{ c.j }}</span><span style="text-align:right">{{ c.r }}</span><span style="text-align:right;font-weight:600">{{ c.h }}</span><span style="text-align:right">{{ c.o }}</span><span style="text-align:right;color:{{ c.cbc }}">{{ c.cb }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1208,&quot;height&quot;:900},&quot;onOpen&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(screen: string) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  state = { range: '30d', start: '2026-08-28', end: '2026-09-26', feedback: '' };
+  renderVals() {
+    const periods = { '30d': ['Aug 28 – Sep 26', 1], '90d': ['Jun 29 – Sep 26', 3], YTD: ['Jan 1 – Sep 26', 9] };
+    const days = Math.max(1, Math.round((Date.parse(this.state.end + 'T00:00:00Z') - Date.parse(this.state.start + 'T00:00:00Z')) / 86400000) + 1);
+    const valid = this.state.range !== 'Custom' || (this.state.start && this.state.end && this.state.start <= this.state.end);
+    const factor = this.state.range === 'Custom' ? valid ? days / 30 : 1 : periods[this.state.range][1];
+    const money = n => '$' + Math.round(n * factor).toLocaleString();
+    const count = n => Math.round(n * factor);
+    const period = this.state.range === 'Custom' ? `${this.state.start || 'Start'} – ${this.state.end || 'End'}` : periods[this.state.range][0];
+    const ranges = ['30d', '90d', 'YTD', 'Custom'].map(label => { const on = label === this.state.range; return { label, on, bg: on ? '#fff' : 'transparent', fg: on ? '#0F172A' : '#64748B', fw: on ? 600 : 400, shadow: on ? '0 1px 2px rgba(15,23,42,.08)' : 'none', choose: () => this.setState({ range: label, feedback: label === '30d' ? '' : 'Demo values estimated from the 30-day sample.' }) }; });
+    const kpis = [['Revenue', money(78420), '+14%'], ['Jobs completed', String(count(142)), '+9'], ['Avg ticket', '$552', '+$31'], ['Close rate', '42%', '+3pt'], ['Google rating', '4.9', '18 new']].map(([label, value, delta]) => ({ label, value, delta }));
+    const svcData = [['House wash', 24180], ['Roof soft wash', 16920], ['Commercial', 14300], ['Flatwork', 8640], ['Fleet', 6900], ['Gutters', 4280], ['Holiday lights', 3200]];
+    const svc = svcData.map(([n, v]) => ({ n, v: money(v), w: (v / 24180 * 100).toFixed(1) + '%' }));
+    const funnel = [['Sent', 61, '#0F766E'], ['Viewed', 52, '#14887F'], ['Signed', 26, '#2FA398'], ['Paid', 24, '#16A34A']].map(([n, v, c]) => ({ n, v: count(v), c, w: (v / 61 * 100).toFixed(1) + '%', p: Math.round(v / 61 * 100) + '%' }));
+    const sources = [['Referral', 18, 11, 12400, '$0'], ['Google Ads', 42, 14, 15900, '$38'], ['Website', 26, 9, 8200, '$0'], ['Canvassing', 17, 6, 5100, '$22'], ['Yard signs', 9, 3, 1800, '$6'], ['Facebook', 14, 2, 900, '$51']].map(([n, l, w, r, cpl]) => { const p = Math.round(w / l * 100); return { n, l: count(l), w: count(w), r: money(r), cpl, c: p + '%', cc: p >= 40 ? '#15803D' : p < 20 ? '#C2410C' : '#0F172A' }; });
+    const crews = [['Crew A', '#0F766E', 48, 27300, '$118', '96%', 0], ['Crew B', '#2563EB', 44, 24100, '$109', '93%', 1], ['Crew C', '#DD6B2F', 36, 16200, '$97', '88%', 2], ['Lights', '#B91C1C', 14, 10820, '$124', '100%', 0]].map(([n, c, j, r, h, o, cb]) => ({ n, c, j: count(j), r: money(r), h, o, cb: count(cb), cbc: cb ? '#C2410C' : '#94A3B8' }));
+    const exportCsv = () => {
+      if (!valid) { this.setState({ feedback: 'Choose a valid start and end date before exporting.' }); return; }
+      const lines = [['Demo report', period], ['Metric', 'Value'], ...kpis.map(k => [k.label, k.value]), ['Service', 'Revenue'], ...svc.map(s => [s.n, s.v]), ['Lead source', 'Leads', 'Won', 'Revenue'], ...sources.map(s => [s.n, s.l, s.w, s.r]), ['Crew', 'Jobs', 'Revenue'], ...crews.map(c => [c.n, c.j, c.r])];
+      const csv = lines.map(line => line.map(value => { const safe = String(value).replace(/^[\s]*[=+@-]/, "'$&"); return '"' + safe.replace(/"/g, '""') + '"'; }).join(',')).join('\r\n');
+      const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+      const link = document.createElement('a'); link.href = url; link.download = 'demo-report.csv'; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+      this.setState({ feedback: 'Demo report CSV downloaded.' });
+    };
+    return { period, ranges, custom: this.state.range === 'Custom', start: this.state.start, end: this.state.end, feedback: valid ? this.state.feedback : 'Choose a valid start and end date.',
+      setStart: e => this.setState({ start: e.target.value }), setEnd: e => this.setState({ end: e.target.value }), exportCsv,
+      kpis, revenueTotal: money(78420), recovered: count(54), svc, funnel, sources, crews };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/colors_and_type.css">
+<script src="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/_ds_bundle.js"></script>
+</helmet>
+<div style="width:100%;height:100%;min-width:0;display:flex;flex-direction:column;background:#fff;font-family:var(--font-sans);font-size:13px;line-height:1.4;color:#0F172A;overflow:hidden">
+  <div style="height:52px;flex:none;display:flex;align-items:center;gap:10px;padding:0 20px;border-bottom:1px solid #E2E8F0">
+    <div style="font-size:14px;font-weight:600">Plans</div>
+    <span style="height:22px;display:inline-flex;align-items:center;padding:0 7px;border-radius:5px;font-size:12px;font-weight:500;background:#F0FDFA;color:#0F766E">Suds Club</span>
+    <div style="flex:1"></div>
+    <button type="button" onClick="{{ showPricing }}" style="height:30px;display:flex;align-items:center;padding:0 10px;border:1px solid #E2E8F0;border-radius:7px;color:#334155;background:#fff;font-weight:500;cursor:pointer">Tiers &amp; pricing</button>
+    <button type="button" onClick="{{ enroll }}" style="height:30px;display:flex;align-items:center;padding:0 12px;background:#0F766E;color:#fff;border:0;border-radius:7px;font-weight:600;cursor:pointer">Enroll client</button>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) minmax(0,1.3fr);border-bottom:1px solid #E2E8F0">
+    <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
+      <div style="padding:14px 20px;border-right:1px solid #E2E8F0;display:flex;flex-direction:column;gap:4px">
+        <div style="font-size:12px;color:#64748B">{{ k.label }}</div>
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font:600 22px var(--font-mono);letter-spacing:-.02em">{{ k.value }}</span><span style="font:500 12px var(--font-mono);color:{{ k.dc }}">{{ k.delta }}</span></div>
+      </div>
+    </sc-for>
+    <div style="padding:14px 20px;display:flex;flex-direction:column;gap:8px">
+      <div style="font-size:12px;color:#64748B">Tier mix</div>
+      <div style="display:flex;gap:2px;height:8px;border-radius:4px;overflow:hidden"><span style="flex:22;background:#CA8A04"></span><span style="flex:41;background:#94A3B8"></span><span style="flex:21;background:#C2410C"></span></div>
+      <div style="display:flex;gap:14px;font-size:12px;color:#475569"><span>Gold <span style="font-family:var(--font-mono);font-weight:600;color:#0F172A">22</span></span><span>Silver <span style="font-family:var(--font-mono);font-weight:600;color:#0F172A">41</span></span><span>Bronze <span style="font-family:var(--font-mono);font-weight:600;color:#0F172A">21</span></span></div>
+    </div>
+  </div>
+  <div style="height:44px;flex:none;display:flex;align-items:center;gap:4px;padding:0 20px;border-bottom:1px solid #E2E8F0;font-size:12px">
+    <sc-for list="{{ views }}" as="v" hint-placeholder-count="4">
+      <button type="button" onClick="{{ v.select }}" aria-pressed="{{ v.active }}" style="height:28px;display:flex;align-items:center;gap:6px;padding:0 10px;border:0;border-radius:6px;background:{{ v.bg }};color:{{ v.fg }};font-weight:{{ v.fw }};cursor:pointer">{{ v.l }}<span style="font-family:var(--font-mono);color:{{ v.nc }}">{{ v.n }}</span></button>
+    </sc-for>
+    <div style="flex:1"></div>
+    <div style="display:flex;gap:12px;color:#64748B"><span style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:2px;background:#3FA06A"></span>Spring</span><span style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:2px;background:#DD9F32"></span>Summer</span><span style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:2px;background:#C56038"></span>Fall</span><span style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:2px;background:#4C7FB8"></span>Winter</span></div>
+  </div>
+  <div style="display:grid;grid-template-columns:minmax(0,1.4fr) 76px 132px 90px 80px 76px 100px 116px;gap:0 12px;padding:0 20px;height:30px;align-items:center;border-bottom:1px solid #E2E8F0;background:#F8FAFC;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#94A3B8">
+    <span>Client</span><span>Tier</span><span>Visits this year</span><span>Next visit</span><span>Crew</span><span style="text-align:right">Price</span><span>Billing</span><span>Status</span>
+  </div>
+  <sc-if value="{{ notice }}"><div role="status" style="padding:8px 20px;background:#F0FDFA;color:#0F766E">{{ notice }}</div></sc-if>
+  <sc-if value="{{ selected }}"><div style="padding:8px 20px;border-bottom:1px solid #E2E8F0"><strong>{{ selected.n }}</strong> · {{ selected.tier }} · {{ selected.st }} · next {{ selected.next }} <sc-if value="{{ canOpenClient }}"><button type="button" onClick="{{ openClient }}" style="margin-left:8px;border:0;background:transparent;color:#0F766E;cursor:pointer">Open client</button></sc-if><sc-if value="{{ unavailableDetail }}"><span style="margin-left:8px;color:#64748B">Client detail unavailable in this demo</span></sc-if></div></sc-if>
+  <div style="flex:1;min-height:0;overflow:auto">
+    <sc-for list="{{ rows }}" as="r" hint-placeholder-count="14">
+      <button type="button" onClick="{{ r.inspect }}" aria-label="Inspect plan for {{ r.n }}" style="width:100%;text-align:left;background:#fff;border:0;display:grid;grid-template-columns:minmax(0,1.4fr) 76px 132px 90px 80px 76px 100px 116px;gap:0 12px;padding:0 20px;height:40px;align-items:center;border-bottom:1px solid #F1F5F9;cursor:pointer">
+        <span style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.n }}</span>
+        <span><span style="height:22px;display:inline-flex;align-items:center;padding:0 7px;border-radius:5px;font-size:12px;font-weight:600;background:{{ r.tbg }};color:{{ r.tfg }}">{{ r.tier }}</span></span>
+        <span style="display:flex;gap:3px"><sc-for list="{{ r.segs }}" as="s" hint-placeholder-count="4"><span style="flex:1;height:8px;border-radius:2px;background:{{ s }}"></span></sc-for></span>
+        <span style="font:500 12px var(--font-mono);color:{{ r.nc }}">{{ r.next }}</span>
+        <span style="color:#475569">{{ r.crew }}</span>
+        <span style="text-align:right;font:500 13px var(--font-mono)">{{ r.price }}</span>
+        <span style="font:500 12px var(--font-mono);color:#64748B">{{ r.bill }}</span>
+        <span><span style="height:22px;display:inline-flex;align-items:center;gap:5px;padding:0 7px;border-radius:5px;font-size:12px;font-weight:500;white-space:nowrap;background:{{ r.sbg }};color:{{ r.sfg }}"><span style="width:6px;height:6px;border-radius:50%;background:{{ r.sfg }}"></span>{{ r.st }}</span></span>
+      </button>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1208,&quot;height&quot;:900},&quot;onOpen&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(screen: string) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { view: 'All', selected: null, notice: '' };
+  }
+  renderVals() {
+    const kpis = [['Active plans', '84', '+6 mo', '#15803D'], ['MRR', '$7,120', '+$340', '#15803D'], ['Churn · 90d', '2.4%', '2 cancels', '#64748B'], ['Visits due · 14d', '19', '7 unscheduled', '#C2410C']].map(([label, value, delta, dc]) => ({ label, value, delta, dc }));
+    const views = [['All', '84'], ['Due soon', '19'], ['Unscheduled', '7'], ['Payment failed', '2'], ['Paused', '3']].map(([l, n]) => ({ l, n, active: this.state.view === l, bg: this.state.view === l ? '#F1F5F9' : 'transparent', fg: this.state.view === l ? '#0F172A' : '#475569', fw: this.state.view === l ? 600 : 500, nc: '#94A3B8', select: () => this.setState({ view: l, selected: null }) }));
+    const TI = { Gold: ['#FEFCE8', '#A16207'], Silver: ['#F1F5F9', '#475569'], Bronze: ['#FFF1E8', '#9A3412'] };
+    const ST = { Active: ['#F0FDF4', '#15803D'], Unscheduled: ['#FFF1E8', '#C2410C'], 'Payment failed': ['#FEF2F2', '#B91C1C'], Paused: ['#F1F5F9', '#64748B'] };
+    const SEA = ['#3FA06A', '#DD9F32', '#C56038', '#4C7FB8'], SOFT = ['#D6EEDF', '#F6E6C4', '#F2D5C8', '#D5E2F1'];
+    const visits = { Gold: 4, Silver: 3, Bronze: 2 };
+    const allRows = [
+      ['Marcus & Elena Pruitt', 'Gold', 2, 'Oct 14', 'Crew A', '$89/mo', 'Card ·4410', 'Active'],
+      ['Dana Whitfield', 'Silver', 2, 'Oct 8', 'Crew A', '$59/mo', 'ACH', 'Active'],
+      ['Tom Beckett', 'Bronze', 1, 'Oct 2', '—', '$39/mo', 'Card ·8812', 'Unscheduled'],
+      ['Ray Delgado', 'Silver', 2, 'Oct 11', 'Crew C', '$59/mo', 'Card ·0931', 'Active'],
+      ['Hartley residence', 'Gold', 2, 'Oct 6', '—', '$89/mo', 'Card ·2276', 'Unscheduled'],
+      ['Kim Tran', 'Silver', 2, 'Oct 9', 'Crew B', '$59/mo', 'Card ·5540', 'Active'],
+      ['Alvarez family', 'Gold', 3, 'Nov 2', 'Crew A', '$89/mo', 'ACH', 'Active'],
+      ['Chris Donnelly', 'Bronze', 1, '—', '—', '$39/mo', 'Card ·1123', 'Payment failed'],
+      ['Beth Sorensen', 'Silver', 2, 'Oct 4', 'Crew C', '$59/mo', 'Card ·7719', 'Active'],
+      ['Nguyen family', 'Gold', 2, 'Oct 15', 'Crew A', '$89/mo', 'Card ·3308', 'Active'],
+      ['Paul Ortega', 'Bronze', 1, '—', '—', '$39/mo', 'Card ·6021', 'Paused'],
+      ['Ivy Chambers', 'Silver', 2, 'Oct 12', 'Crew B', '$59/mo', 'ACH', 'Active'],
+      ['Leo Brandt', 'Gold', 2, 'Oct 7', '—', '$89/mo', 'Card ·4497', 'Unscheduled'],
+      ['Grace Kim', 'Silver', 1, 'Oct 19', 'Crew C', '$59/mo', 'Card ·9150', 'Active'],
+    ].map(([n, tier, done, next, crew, price, bill, st]) => ({
+      n, tier, next, crew, price, bill, st, tbg: TI[tier][0], tfg: TI[tier][1], sbg: ST[st][0], sfg: ST[st][1],
+      nc: next === '—' ? '#CBD5E1' : '#0F172A',
+      segs: [0, 1, 2, 3].map(i => i < done ? SEA[i] : i < visits[tier] ? SOFT[i] : '#F1F5F9'),
+      inspect: () => this.setState({ selected: { n, tier, st, next }, notice: '' }),
+    }));
+    const rows = allRows.filter(r => this.state.view === 'All' || this.state.view === 'Due soon' && /^Oct (?:[1-9]|1[0-4])$/.test(r.next) || this.state.view === r.st);
+    const canOpenClient = this.state.selected?.n === 'Marcus & Elena Pruitt';
+    return { kpis, views, rows, selected: this.state.selected, canOpenClient, unavailableDetail: !!this.state.selected && !canOpenClient, notice: this.state.notice, showPricing: () => this.setState({ notice: 'Demo tiers: Bronze $39/mo · Silver $59/mo · Gold $89/mo.' }), enroll: () => this.setState({ notice: 'Enrollment preview only. Select a plan to inspect a demo row.' }), openClient: () => { if (this.state.selected?.n === 'Marcus & Elena Pruitt') this.props.onOpen?.('client'); } };
+  }
+}
+</script>
+</body>
+</html>

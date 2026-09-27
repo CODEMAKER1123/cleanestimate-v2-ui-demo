@@ -1,0 +1,267 @@
+/*
+ * CleanEstimate Pro — Foundation tokens
+ *
+ * Source of truth: src/app/globals.css (web) + mobile/tailwind.config.ts
+ *
+ * NOTE: The brand kit describes a three-theme split (customer teal / admin blue /
+ * mobile blue+orange). The **actual shipping codebase** is blue-first across web
+ * and mobile, with orange as the mobile accent. These tokens match the code.
+ * The teal customer-app tokens are kept as optional brand-kit aliases only.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* ---------- Font stacks ---------- */
+  --font-sans: "DM Sans", "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", "Cascadia Code", Consolas, Menlo, monospace;
+
+  /* ---------- Primary (blue) scale ---------- */
+  --blue-50:  #EFF6FF;
+  --blue-100: #DBEAFE;
+  --blue-200: #BFDBFE;
+  --blue-300: #93C5FD;
+  --blue-400: #60A5FA;
+  --blue-500: #3B82F6;
+  --blue-600: #2563EB;
+  --blue-700: #1D4ED8;
+  --blue-800: #1E40AF;
+  --blue-900: #1E3A8A;
+  --blue-950: #172554;
+
+  /* ---------- Accent (warm orange) scale ---------- */
+  --warm-50:  #FFF7ED;
+  --warm-100: #FFEDD5;
+  --warm-200: #FED7AA;
+  --warm-300: #FDBA74;
+  --warm-400: #FB923C;
+  --warm-500: #F97316;
+  --warm-600: #EA580C;
+  --warm-700: #C2410C;
+  --warm-800: #9A3412;
+  --warm-900: #7C2D12;
+
+  /* ---------- Green (success + marketing proof) ---------- */
+  --green-50:  #F0FDF4;
+  --green-100: #DCFCE7;
+  --green-200: #BBF7D0;
+  --green-300: #86EFAC;
+  --green-400: #4ADE80;
+  --green-500: #22C55E;
+  --green-600: #16A34A;
+  --green-700: #15803D;
+  --green-800: #166534;
+  --green-900: #14532D;
+
+  /* ---------- Warm stone gray (marketing neutrals) ---------- */
+  --gray-50:  #FAFAF9;
+  --gray-100: #F5F5F4;
+  --gray-200: #E7E5E4;
+  --gray-300: #D6D3D1;
+  --gray-400: #A8A29E;
+  --gray-500: #78716C;
+  --gray-600: #57534E;
+  --gray-700: #44403C;
+  --gray-800: #292524;
+  --gray-900: #1C1917;
+  --gray-950: #0C0A09;
+
+  /* ---------- Slate (admin / product UI neutrals) ---------- */
+  --slate-50:  #F8FAFC;
+  --slate-100: #F1F5F9;
+  --slate-200: #E2E8F0;
+  --slate-300: #CBD5E1;
+  --slate-400: #94A3B8;
+  --slate-500: #64748B;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1E293B;
+  --slate-900: #0F172A;
+
+  /* ---------- Brand ---------- */
+  --brand:       var(--blue-600);   /* #2563EB  — web + admin primary */
+  --brand-dark:  var(--blue-700);   /* hover */
+  --brand-light: var(--blue-50);    /* soft fills */
+
+  /* Customer-app teal (brand-kit alias, not yet in code) */
+  --brand-teal:       #0F766E;
+  --brand-teal-dark:  #115E59;
+  --brand-teal-light: #ECFEFF;
+
+  /* ---------- Semantic intents ---------- */
+  --success:     var(--green-600);
+  --success-bg:  var(--green-50);
+  --warning:     #D97706;
+  --warning-bg:  #FEF3C7;
+  --danger:      #DC2626;
+  --danger-bg:   #FEE2E2;
+  --info:        var(--blue-500);
+  --info-bg:     var(--blue-50);
+
+  /* ---------- Margin indicator (mobile estimate health) ---------- */
+  --margin-excellent: #22C55E;
+  --margin-good:      #84CC16;
+  --margin-fair:      #EAB308;
+  --margin-low:       #F97316;
+  --margin-danger:    #EF4444;
+
+  /* ---------- Surface / text (light) ---------- */
+  --bg:          #F8FAFC;            /* admin canvas */
+  --surface:     #FFFFFF;            /* cards */
+  --surface-alt: var(--slate-100);   /* muted / secondary */
+  --fg:          var(--slate-900);   /* body text */
+  --fg-muted:    var(--slate-500);   /* subtext */
+  --fg-subtle:   var(--slate-400);
+  --border:      var(--slate-200);
+  --border-strong: var(--slate-300);
+  --ring:        var(--brand);
+
+  /* Sidebar (navy) — from brand kit customer app */
+  --sidebar:     #0F172A;
+  --sidebar-fg:  #E2E8F0;
+  --sidebar-accent: #2DD4BF;
+
+  /* ---------- Radius scale (base 0.5rem per shipping code) ---------- */
+  --radius:     0.5rem;                         /* 8px  — lg */
+  --radius-sm:  calc(var(--radius) - 4px);      /* 4px */
+  --radius-md:  calc(var(--radius) - 2px);      /* 6px */
+  --radius-lg:  var(--radius);                  /* 8px */
+  --radius-xl:  calc(var(--radius) + 4px);      /* 12px */
+  --radius-2xl: calc(var(--radius) + 8px);      /* 16px */
+  --radius-3xl: calc(var(--radius) + 12px);     /* 20px */
+  --radius-4xl: calc(var(--radius) + 16px);     /* 24px — hero / admin surfaces */
+  --radius-full: 9999px;
+
+  /* ---------- Spacing ---------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Mobile touch targets */
+  --touch:      48px;
+  --input-h:    52px;
+  --button-h:   52px;
+  --button-sm:  40px;
+  --header-h:   56px;
+  --tab-bar-h:  84px;
+
+  /* ---------- Shadows (admin surfaces) ---------- */
+  --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.08), 0 1px 2px -1px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 20px 56px -40px rgba(15, 23, 42, 0.22);
+  --shadow-lg: 0 28px 80px -54px rgba(15, 23, 42, 0.28);
+  --shadow-xl: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+
+  /* ---------- Type scale (mobile + shared) ---------- */
+  --fs-xs:   12px; --lh-xs:   16px;
+  --fs-sm:   14px; --lh-sm:   20px;
+  --fs-base: 16px; --lh-base: 24px;
+  --fs-lg:   18px; --lh-lg:   28px;
+  --fs-xl:   20px; --lh-xl:   28px;
+  --fs-2xl:  24px; --lh-2xl:  32px;
+  --fs-3xl:  30px; --lh-3xl:  36px;
+  --fs-4xl:  36px; --lh-4xl:  40px;
+  --fs-5xl:  48px; --lh-5xl:  52px;
+  --fs-6xl:  60px; --lh-6xl:  64px;
+  --fs-7xl:  72px; --lh-7xl:  76px;
+}
+
+/* ============================================================
+   Semantic element defaults
+   ============================================================ */
+
+html, body {
+  font-family: var(--font-sans);
+  color: var(--fg);
+  background: var(--bg);
+  font-size: var(--fs-base);
+  line-height: var(--lh-base);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Display / headings — tight tracking, extrabold */
+h1, .h1 {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: var(--fs-6xl);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--fg);
+}
+h2, .h2 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--fs-4xl);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+h3, .h3 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--fs-2xl);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--fg);
+}
+h4, .h4 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: var(--fs-lg);
+  line-height: 1.3;
+  color: var(--fg);
+}
+h5, .h5 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: var(--fs-base);
+  line-height: 1.4;
+  color: var(--fg);
+}
+
+p, .p {
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  color: var(--fg);
+}
+.lead {
+  font-size: var(--fs-xl);
+  line-height: 1.55;
+  color: var(--fg-muted);
+}
+small, .small {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-sm);
+  color: var(--fg-muted);
+}
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: var(--brand);
+}
+.label {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--fg);
+}
+
+code, kbd, samp, pre, .mono {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+}
+code {
+  background: var(--slate-100);
+  padding: 0.12em 0.4em;
+  border-radius: var(--radius-sm);
+  color: var(--slate-800);
+}

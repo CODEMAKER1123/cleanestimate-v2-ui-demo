@@ -1,0 +1,14 @@
+/* CleanEstimate Pro Design System — root stylesheet.
+   Single entry point for consumers; pulls in every token sheet.
+
+   colors_and_type.css — canonical brand tokens (blue-first shipping code)
+   mobile_app/tokens.css — mobile foundation, teal-first direction (Run 1, Jun 2026)
+   sales_mode/tokens.css — Sales Mode prototype tokens
+   simple/tokens.css — CleanEstimate Simple tokens
+   preview/_card.css — design-system tab card chrome (preview-only) */
+
+@import url("colors_and_type.css");
+@import url("mobile_app/tokens.css");
+@import url("sales_mode/tokens.css");
+@import url("simple/tokens.css");
+@import url("preview/_card.css");

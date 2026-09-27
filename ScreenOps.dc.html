@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/colors_and_type.css">
+<script src="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/_ds_bundle.js"></script>
+</helmet>
+<div style="width:100%;height:100%;min-width:0;display:flex;flex-direction:column;background:#fff;font-family:var(--font-sans);font-size:13px;line-height:1.4;color:#0F172A;overflow:hidden">
+  <div style="height:52px;flex:none;display:flex;align-items:center;gap:10px;padding:0 20px;border-bottom:1px solid #E2E8F0">
+    <div style="font-size:14px;font-weight:600">Ops</div>
+    <span style="display:flex;align-items:center;gap:6px;font-size:12px;color:#15803D;font-weight:500"><span style="width:7px;height:7px;border-radius:50%;background:#16A34A"></span>Demo snapshot · 2:14 PM</span>
+    <div style="flex:1"></div>
+    <button type="button" onClick="{{ settings }}" style="height:30px;display:flex;align-items:center;padding:0 10px;border:1px solid #E2E8F0;border-radius:7px;color:#334155;background:#fff;font-weight:500;cursor:pointer">Crew settings</button>
+    <button type="button" onClick="{{ exportPayroll }}" style="height:30px;display:flex;align-items:center;padding:0 10px;border:1px solid #E2E8F0;border-radius:7px;color:#334155;background:#fff;font-weight:500;cursor:pointer">Export payroll</button>
+  </div>
+  <div style="display:flex;gap:4px;padding:6px 20px;border-bottom:1px solid #E2E8F0"><sc-for list="{{ tabs }}" as="tab"><button type="button" onClick="{{ tab.select }}" aria-pressed="{{ tab.active }}" style="padding:5px 10px;border:0;border-radius:6px;background:{{ tab.bg }};color:{{ tab.fg }};cursor:pointer">{{ tab.name }}</button></sc-for></div>
+  <sc-if value="{{ notice }}"><div role="status" style="padding:8px 20px;background:#F0FDFA;color:#0F766E">{{ notice }}</div></sc-if>
+  <div style="flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr) minmax(0,1fr);overflow:auto">
+    <sc-if value="{{ showCrews }}"><div style="grid-column:{{ panelColumn }};grid-row:{{ panelRow }};border-right:1px solid #E2E8F0;border-bottom:1px solid #E2E8F0;display:flex;flex-direction:column;min-width:0;overflow:auto">
+      <div style="height:42px;flex:none;display:flex;align-items:center;gap:8px;padding:0 20px"><span style="font-weight:600">Crews</span><span style="font:500 12px var(--font-mono);color:#64748B">4 out · 11 people</span><span style="flex:1"></span><button type="button" onClick="{{ openMap }}" style="border:0;background:transparent;font-size:12px;color:#0F766E;font-weight:600;cursor:pointer">Open map</button></div>
+      <div style="display:grid;grid-template-columns:100px 96px minmax(0,1fr) 60px 110px;gap:0 12px;padding:0 20px;height:28px;align-items:center;border-top:1px solid #E2E8F0;border-bottom:1px solid #E2E8F0;background:#F8FAFC;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#94A3B8"><span>Crew</span><span>Status</span><span>Now</span><span style="text-align:right">On site</span><span style="text-align:right">Today</span></div>
+      <sc-for list="{{ crews }}" as="c" hint-placeholder-count="4">
+        <div style="display:grid;grid-template-columns:100px 96px minmax(0,1fr) 60px 110px;gap:0 12px;padding:0 20px;height:50px;align-items:center;border-bottom:1px solid #F1F5F9">
+          <span style="display:flex;flex-direction:column;line-height:1.25"><span style="display:flex;align-items:center;gap:6px;font-weight:600"><span style="width:8px;height:8px;border-radius:2px;background:{{ c.c }}"></span>{{ c.n }}</span><span style="font-size:12px;color:#94A3B8;padding-left:14px">{{ c.who }}</span></span>
+          <span><span style="height:22px;display:inline-flex;align-items:center;gap:5px;padding:0 7px;border-radius:5px;font-size:12px;font-weight:500;white-space:nowrap;background:{{ c.bg }};color:{{ c.fg }}"><span style="width:6px;height:6px;border-radius:50%;background:{{ c.fg }}"></span>{{ c.st }}</span></span>
+          <span style="display:flex;flex-direction:column;line-height:1.25;min-width:0"><span style="font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.now }}</span><span style="font-size:12px;color:#64748B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.sub }}</span></span>
+          <span style="text-align:right;font:500 12px var(--font-mono);color:#475569">{{ c.t }}</span>
+          <span style="text-align:right;font:500 12px var(--font-mono)"><span style="font-weight:600">{{ c.done }}</span><span style="color:#94A3B8"> / {{ c.plan }}</span></span>
+        </div>
+      </sc-for>
+      <div style="flex:1"></div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #E2E8F0">
+        <sc-for list="{{ totals }}" as="t" hint-placeholder-count="4">
+          <div style="padding:10px 20px;border-right:1px solid #F1F5F9"><div style="font-size:11px;color:#64748B">{{ t.k }}</div><div style="font:600 15px var(--font-mono)">{{ t.v }}</div></div>
+        </sc-for>
+      </div>
+    </div></sc-if>
+    <sc-if value="{{ showTimesheets }}"><div style="grid-column:{{ panelColumn }};grid-row:{{ panelRow }};border-bottom:1px solid #E2E8F0;display:flex;flex-direction:column;min-width:0;background:#FCFDFE;overflow:auto">
+      <div style="height:42px;flex:none;display:flex;align-items:center;gap:8px;padding:0 20px"><span style="font-weight:600">Timesheets</span><span style="font:500 12px var(--font-mono);color:#64748B">Week of Sep 22</span><span style="flex:1"></span><button type="button" onClick="{{ approveAll }}" style="height:26px;display:flex;align-items:center;padding:0 10px;background:#0F766E;color:#fff;border:0;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer">Approve {{ pendingCount }}</button></div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) 70px 60px 50px 80px;gap:0 12px;padding:0 20px;height:28px;align-items:center;border-top:1px solid #E2E8F0;border-bottom:1px solid #E2E8F0;background:#F8FAFC;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#94A3B8"><span>Person</span><span>Crew</span><span style="text-align:right">Hours</span><span style="text-align:right">OT</span><span></span></div>
+      <sc-for list="{{ sheets }}" as="s" hint-placeholder-count="7">
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 70px 60px 50px 80px;gap:0 12px;padding:0 20px;height:34px;align-items:center;border-bottom:1px solid #F1F5F9">
+          <span style="font-weight:500">{{ s.n }}</span><span style="color:#64748B">{{ s.crew }}</span><span style="text-align:right;font:500 12px var(--font-mono)">{{ s.h }}</span><span style="text-align:right;font:500 12px var(--font-mono);color:{{ s.oc }}">{{ s.ot }}</span>
+          <button type="button" onClick="{{ s.approve }}" disabled="{{ s.approved }}" style="text-align:right;font-size:12px;font-weight:600;color:{{ s.ac }};border:0;background:transparent;cursor:pointer">{{ s.a }}</button>
+        </div>
+      </sc-for>
+    </div></sc-if>
+    <sc-if value="{{ showSupplies }}"><div style="grid-column:{{ panelColumn }};grid-row:{{ panelRow }};border-right:1px solid #E2E8F0;display:flex;flex-direction:column;min-width:0;overflow:auto">
+      <div style="height:42px;flex:none;display:flex;align-items:center;gap:8px;padding:0 20px"><span style="font-weight:600">Chemicals &amp; supplies</span><span style="font:600 11px var(--font-mono);background:#FFF1E8;color:#C2410C;padding:1px 6px;border-radius:4px">2 low</span><span style="flex:1"></span><button type="button" onClick="{{ reorder }}" style="border:0;background:transparent;font-size:12px;color:#0F766E;font-weight:600;cursor:pointer">Reorder</button></div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) 180px 80px 80px;gap:0 14px;padding:0 20px;height:28px;align-items:center;border-top:1px solid #E2E8F0;border-bottom:1px solid #E2E8F0;background:#F8FAFC;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#94A3B8"><span>Item</span><span>Level</span><span style="text-align:right">On hand</span><span style="text-align:right">~Days left</span></div>
+      <sc-for list="{{ inv }}" as="i" hint-placeholder-count="6">
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 180px 80px 80px;gap:0 14px;padding:0 20px;height:36px;align-items:center;border-bottom:1px solid #F1F5F9">
+          <span style="font-weight:500">{{ i.n }}</span>
+          <span style="height:6px;border-radius:3px;background:#E2E8F0;overflow:hidden"><span style="display:block;height:100%;width:{{ i.p }};background:{{ i.c }}"></span></span>
+          <span style="text-align:right;font:500 12px var(--font-mono)">{{ i.h }}</span>
+          <span style="text-align:right;font:500 12px var(--font-mono);color:{{ i.dc }}">{{ i.d }}</span>
+        </div>
+      </sc-for>
+    </div></sc-if>
+    <sc-if value="{{ showEquipment }}"><div style="grid-column:{{ panelColumn }};grid-row:{{ panelRow }};display:flex;flex-direction:column;min-width:0;background:#FCFDFE;overflow:auto">
+      <div style="height:42px;flex:none;display:flex;align-items:center;gap:8px;padding:0 20px"><span style="font-weight:600">Equipment &amp; vehicles</span><span style="flex:1"></span><button type="button" onClick="{{ logService }}" style="border:0;background:transparent;font-size:12px;color:#0F766E;font-weight:600;cursor:pointer">Log service</button></div>
+      <sc-for list="{{ equip }}" as="e" hint-placeholder-count="6">
+        <div style="display:flex;align-items:center;gap:10px;padding:0 20px;height:44px;border-top:1px solid #F1F5F9">
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.25"><span style="font-weight:500">{{ e.n }}</span><span style="font-size:12px;color:#64748B">{{ e.sub }}</span></div>
+          <span style="height:22px;display:inline-flex;align-items:center;padding:0 7px;border-radius:5px;font-size:12px;font-weight:500;white-space:nowrap;background:{{ e.bg }};color:{{ e.fg }}">{{ e.st }}</span>
+        </div>
+      </sc-for>
+    </div></sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1208,&quot;height&quot;:900},&quot;onOpen&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(screen: string) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'Overview', approved: {}, notice: '' };
+  }
+  renderVals() {
+    const tabs = ['Overview', 'Crews', 'Timesheets', 'Supplies', 'Equipment'].map(name => ({ name, active: this.state.tab === name, bg: this.state.tab === name ? '#F1F5F9' : 'transparent', fg: this.state.tab === name ? '#0F172A' : '#64748B', select: () => this.setState({ tab: name, notice: '' }) }));
+    const preview = notice => () => this.setState({ notice });
+    const S = { site: ['#F0FDFA', '#0F766E'], drive: ['#EFF6FF', '#1D4ED8'], late: ['#FFF1E8', '#C2410C'], ok: ['#F0FDF4', '#15803D'], soon: ['#FFF1E8', '#C2410C'], slate: ['#F1F5F9', '#475569'] };
+    const crews = [
+      ['Crew A', 'Luis, Andre', '#0F766E', 'On site', 'site', 'Marcus Pruitt · Roof soft wash', 'Next: Lisa Okafor 4:00', '1:59', '$1,605', '$2,245'],
+      ['Crew B', 'Tyler, Mo', '#2563EB', 'Driving', 'drive', 'To Tom Beckett · ETA 6 min', '3310 Duval St', '—', '$1,240', '$1,720'],
+      ['Crew C', 'Jess, Kai', '#DD6B2F', 'Running late', 'late', 'Priya Natarajan · Driveway', 'Next: Greenway Dental 2:30', '1:02', '$0', '$950'],
+      ['Lights', 'Drew, Sam, Ali', '#B91C1C', 'On site', 'site', 'Wes Harmon · Roofline install', '210 ft · clips + C9', '1:44', '$0', '$1,650'],
+    ].map(([n, who, c, st, k, now, sub, t, done, plan]) => ({ n, who, c, st, now, sub, t, done, plan, bg: S[k][0], fg: S[k][1] }));
+    const totals = [['Jobs done', '6 / 15'], ['Drive time', '2h 10m'], ['On site', '14h 20m'], ['Callbacks · 30d', '3']].map(([k, v]) => ({ k, v }));
+    const sheets = [['Luis Ortiz', 'A', '38.5', '—', 'Approved'], ['Andre Silva', 'A', '36.0', '—', 'Approved'], ['Tyler Brooks', 'B', '41.5', '1.5', 'Approve'], ['Mo Haddad', 'B', '40.0', '—', 'Approved'], ['Jess Park', 'C', '38.5', '—', 'Approve'], ['Kai Moreno', 'C', '38.5', '—', 'Approved'], ['Drew Collins', 'Lights', '44.0', '4.0', 'Approve']].map(([n, crew, h, ot, a]) => { const approved = a === 'Approved' || !!this.state.approved[n]; return { n, crew, h, ot, a: approved ? 'Approved' : 'Approve', approved, oc: ot === '—' ? '#CBD5E1' : '#C2410C', ac: approved ? '#94A3B8' : '#0F766E', approve: () => this.setState({ approved: { ...this.state.approved, [n]: true }, notice: `${n} approved in this demo only.` }) }; });
+    const inv = [['Sodium hypochlorite 12.5%', 18, '3 drums', '4', 1], ['Surfactant', 64, '6 gal', '21'], ['Degreaser', 52, '4 gal', '16'], ['Rust remover', 14, '1 gal', '3', 1], ['Gutter brightener', 70, '5 gal', '28'], ['Oxalic acid', 45, '3 bags', '19']].map(([n, p, h, d, low]) => ({ n, p: p + '%', h, d, c: low ? '#DD6B2F' : '#0F766E', dc: low ? '#C2410C' : '#475569' }));
+    const equip = [['Truck 1 · F-250', 'Oil change in 420 mi', 'Due soon', 'soon'], ['Truck 2 · Tacoma', 'Next service 2,800 mi', 'OK', 'ok'], ['Trailer rig A · 8 gpm', 'Pump 612 / 650 hrs', 'Due soon', 'soon'], ['Softwash skid · 12V', 'Serviced Sep 3', 'OK', 'ok'], ['20" surface cleaner', 'Bearings replaced Sep 3', 'OK', 'ok'], ['Ladders × 4', 'Inspection Oct 1', 'Scheduled', 'slate']].map(([n, sub, st, k]) => ({ n, sub, st, bg: S[k][0], fg: S[k][1] }));
+    const focused = this.state.tab !== 'Overview';
+    return { crews, totals, sheets, inv, equip, tabs, notice: this.state.notice, showCrews: !focused || this.state.tab === 'Crews', showTimesheets: !focused || this.state.tab === 'Timesheets', showSupplies: !focused || this.state.tab === 'Supplies', showEquipment: !focused || this.state.tab === 'Equipment', panelColumn: focused ? '1 / -1' : 'auto', panelRow: focused ? '1 / -1' : 'auto', pendingCount: sheets.filter(s => !s.approved).length, approveAll: () => this.setState({ approved: { 'Tyler Brooks': true, 'Jess Park': true, 'Drew Collins': true }, notice: '3 timesheets approved in this demo only.' }), settings: preview('Crew settings are a local preview.'), exportPayroll: preview('Payroll export preview only. No file was created.'), openMap: () => this.props.onOpen?.('calendar'), reorder: preview('Reorder preview only. No purchase was placed.'), logService: preview('Service log preview only. No record was changed.') };
+  }
+}
+</script>
+</body>
+</html>

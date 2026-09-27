@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/colors_and_type.css">
+<script src="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/_ds_bundle.js"></script>
+<link rel="stylesheet" href="./demo.css">
+</helmet>
+<nav class="demo-sidebar" aria-label="Demo screens">
+  <div style="height:52px;flex:none;display:flex;align-items:center;gap:9px;padding:0 14px;border-bottom:1px solid #E2E8F0">
+    <img src="assets/logo-default.svg" alt="" style="width:22px;height:22px;border-radius:6px">
+    <div style="flex:1;min-width:0;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Rolling Suds Austin</div>
+    <svg width="14" height="14" viewBox="0 0 24 24" style="fill:none;stroke:#94A3B8;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="m7 15 5 5 5-5M7 9l5-5 5 5"></path></svg>
+  </div>
+  <div style="padding:5px 14px;font-size:11px;font-weight:600;color:#0F766E;background:#ECFDF5;border-bottom:1px solid #D1FAE5">Demo data · Preview only</div>
+  <div style="display:flex;gap:6px;padding:10px 10px 8px">
+    <div style="flex:1;min-width:0;height:30px;display:flex;align-items:center;gap:7px;padding:0 9px;background:#fff;border:1px solid #E2E8F0;border-radius:7px;color:#94A3B8">
+      <svg width="14" height="14" viewBox="0 0 24 24" style="fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M11 3a8 8 0 1 0 0 16 8 8 0 0 0 0-16zM21 21l-4.3-4.3"></path></svg>
+      <input aria-label="Search demo screens" placeholder="Search" value="{{ search }}" onInput="{{ editSearch }}" onKeyDown="{{ searchKey }}" style="flex:1;min-width:0;border:0;background:transparent;color:#0F172A;font:inherit;outline-offset:2px">
+      <span aria-hidden="true" style="font:500 11px var(--font-mono);color:#94A3B8;border:1px solid #E2E8F0;border-radius:4px;padding:0 4px">↵</span>
+    </div>
+    <button type="button" aria-label="New estimate" onClick="{{ newEstimate }}" style="width:30px;height:30px;flex:none;display:flex;align-items:center;justify-content:center;background:#0F766E;border:0;border-radius:7px;color:#fff;cursor:pointer">
+      <svg width="15" height="15" viewBox="0 0 24 24" style="fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round"><path d="M5 12h14M12 5v14"></path></svg>
+    </button>
+  </div>
+  <sc-if value="{{ noResults }}"><div role="status" style="padding:8px 16px;color:#64748B">No screens found</div></sc-if>
+  <sc-for list="{{ sections }}" as="s" hint-placeholder-count="3">
+    <div style="padding:12px 16px 4px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#94A3B8">{{ s.title }}</div>
+    <div style="display:flex;flex-direction:column;gap:1px;padding:0 8px">
+      <sc-for list="{{ s.items }}" as="n" hint-placeholder-count="4">
+        <button type="button" class="demo-nav-button" aria-current="{{ n.current }}" onClick="{{ n.go }}" style="height:29px;display:flex;align-items:center;gap:9px;padding:0 8px;border-radius:6px;border:1px solid {{ n.bd }};background:{{ n.bg }};color:{{ n.fg }};font-weight:{{ n.fw }};cursor:pointer">
+          <svg width="16" height="16" viewBox="0 0 24 24" style="fill:none;stroke:{{ n.ic }};stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none"><path d="{{ n.d }}"></path></svg>
+          <span style="flex:1">{{ n.label }}</span>
+          <sc-if value="{{ n.count }}"><span style="font:500 11px var(--font-mono);color:#64748B">{{ n.count }}</span></sc-if>
+        </button>
+      </sc-for>
+    </div>
+  </sc-for>
+  <div style="flex:1"></div>
+  <div style="margin:0 10px 10px;padding:10px;border:1px solid #E2E8F0;border-radius:8px;background:#fff;display:flex;flex-direction:column;gap:7px">
+    <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:#64748B">Today</span><span style="font-family:var(--font-mono);color:#0F172A">6/15 jobs</span></div>
+    <div style="display:flex;gap:2px;height:5px;border-radius:3px;overflow:hidden">
+      <span style="flex:6;background:#16A34A"></span><span style="flex:3;background:#0F766E"></span><span style="flex:1;background:#DD6B2F"></span><span style="flex:5;background:#E2E8F0"></span>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:#64748B">Collected</span><span style="font-family:var(--font-mono);color:#15803D">$3,150</span></div>
+  </div>
+  <div style="height:48px;flex:none;display:flex;align-items:center;gap:9px;padding:0 14px;border-top:1px solid #E2E8F0">
+    <span style="width:24px;height:24px;border-radius:50%;background:#F97316;color:#fff;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center">HM</span>
+    <div style="flex:1;min-width:0;line-height:1.2"><div style="font-weight:500">Hannah Morales</div><div style="font-size:11px;color:#64748B">Owner</div></div>
+    <svg width="16" height="16" viewBox="0 0 24 24" style="fill:none;stroke:#94A3B8;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M21 4h-7M10 4H3M21 12h-9M8 12H3M21 20h-5M12 20H3M14 2v4M8 10v4M16 18v4"></path></svg>
+  </div>
+</nav>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:232,&quot;height&quot;:900},&quot;active&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;inbox&quot;,&quot;tasks&quot;,&quot;clients&quot;,&quot;pipeline&quot;,&quot;estimates&quot;,&quot;pricebook&quot;,&quot;calendar&quot;,&quot;plans&quot;,&quot;ops&quot;,&quot;canvassing&quot;,&quot;invoices&quot;,&quot;automations&quot;,&quot;reports&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onNavigate&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(key: string) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  state = { search: '' };
+  renderVals() {
+    const a = this.props.active ?? 'home';
+    const search = this.state.search || '';
+    const query = search.trim().toLowerCase();
+    const navigate = k => { this.setState({ search: '' }); this.props.onNavigate?.(k); };
+    const P = {
+      home: 'M3 10 12 3l9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM9 22V12h6v10',
+      inbox: 'M22 12h-6l-2 3h-4l-2-3H2M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z',
+      tasks: 'M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11',
+      clients: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75',
+      pipeline: 'M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM8 7v7M12 7v4M16 7v9',
+      estimates: 'M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7zM14 2v4a2 2 0 0 0 2 2h4M16 13H8M16 17H8M10 9H8',
+      pricebook: 'M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20',
+      calendar: 'M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z',
+      plans: 'm17 2 4 4-4 4M3 11v-1a4 4 0 0 1 4-4h14M7 22l-4-4 4-4M21 13v1a4 4 0 0 1-4 4H3',
+      ops: 'M22 12h-4l-3 9L9 3l-3 9H2',
+      canvassing: 'M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0zM12 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6z',
+      invoices: 'M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zM2 10h20',
+      automations: 'M13 2 3 14h9l-1 8 10-12h-9l1-8z',
+      reports: 'M3 3v18h18M18 17V9M13 17V5M8 17v-3',
+    };
+    const groups = [
+      ['Work', [['home', 'Home'], ['inbox', 'Inbox', '8'], ['tasks', 'Tasks', '5'], ['clients', 'Clients'], ['pipeline', 'Pipeline', '38'], ['estimates', 'Estimates', '12'], ['pricebook', 'Price book']]],
+      ['Field', [['calendar', 'Calendar'], ['plans', 'Plans'], ['ops', 'Ops'], ['canvassing', 'Canvassing']]],
+      ['Business', [['invoices', 'Invoices', '3'], ['automations', 'Automations'], ['reports', 'Reports']]],
+    ];
+    const matches = groups.flatMap(([, items]) => items).filter(([, label]) => label.toLowerCase().includes(query));
+    const sections = groups.map(([title, items]) => ({
+      title,
+      items: items.filter(([, label]) => label.toLowerCase().includes(query)).map(([k, label, count]) => {
+        const on = k === a;
+        return { go: () => navigate(k), label, d: P[k], count: count || '', current: on ? 'page' : 'false', bg: on ? '#FFFFFF' : 'transparent', bd: on ? '#D7E0EA' : 'transparent', fg: on ? '#0F172A' : '#475569', ic: on ? '#0F766E' : '#94A3B8', fw: on ? 600 : 500 };
+      }),
+    })).filter(section => section.items.length);
+    return { sections, search, noResults: !!query && !matches.length, editSearch: e => this.setState({ search: e.target.value }), searchKey: e => { if (e.key === 'Enter' && matches.length) navigate(matches[0][0]); if (e.key === 'Escape') this.setState({ search: '' }); }, newEstimate: () => navigate('estimate') };
+  }
+}
+</script>
+</body>
+</html>

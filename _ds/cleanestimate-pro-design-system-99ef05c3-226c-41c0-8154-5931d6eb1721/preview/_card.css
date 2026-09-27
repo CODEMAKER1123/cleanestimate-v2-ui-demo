@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  font-family: "DM Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+  background: #FFFFFF;
+  color: #0F172A;
+  -webkit-font-smoothing: antialiased;
+}
+.card {
+  padding: 24px;
+  width: 100%;
+  min-height: 100%;
+}
+.mono { font-family: "JetBrains Mono", Consolas, Menlo, monospace; }
+.row { display: flex; gap: 12px; flex-wrap: wrap; }
+.col { display: flex; flex-direction: column; gap: 12px; }
+.muted { color: #64748B; }
+.subtle { color: #94A3B8; }
+.strong { color: #0F172A; }
+.hr { height: 1px; background: #E2E8F0; margin: 12px 0; }

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/colors_and_type.css">
+<script src="_ds/cleanestimate-pro-design-system-99ef05c3-226c-41c0-8154-5931d6eb1721/_ds_bundle.js"></script>
+</helmet>
+<div style="position:relative;width:100%;height:100%;min-width:0;display:flex;flex-direction:column;background:#fff;font-family:var(--font-sans);font-size:13px;line-height:1.4;color:#0F172A;overflow:hidden">
+  <div style="height:52px;flex:none;display:flex;align-items:center;gap:10px;padding:0 20px;border-bottom:1px solid #E2E8F0">
+    <div style="font-size:14px;font-weight:600">Automations</div>
+    <div style="font:500 12px var(--font-mono);color:#64748B">9 on · 1,103 runs this month</div>
+    <div style="flex:1"></div>
+    <button type="button" onClick="{{ showTemplates }}" style="height:30px;display:flex;align-items:center;padding:0 10px;border:1px solid #E2E8F0;border-radius:7px;color:#334155;background:#fff;font:500 13px var(--font-sans);cursor:pointer">Templates</button>
+    <button type="button" onClick="{{ newAutomation }}" style="height:30px;display:flex;align-items:center;padding:0 12px;border:0;background:#0F766E;color:#fff;border-radius:7px;font:600 13px var(--font-sans);cursor:pointer">New automation</button>
+  </div>
+  <div style="flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 440px">
+    <div style="display:flex;flex-direction:column;min-width:0;border-right:1px solid #E2E8F0;overflow:auto">
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) 60px 76px 32px;gap:0 12px;padding:0 20px;height:30px;align-items:center;border-bottom:1px solid #E2E8F0;background:#F8FAFC;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#94A3B8">
+        <span>Name</span><span>When → then</span><span style="text-align:right">Runs</span><span style="text-align:right">Last run</span><span></span>
+      </div>
+      <sc-for list="{{ rows }}" as="r" hint-placeholder-count="11">
+        <div onClick="{{ r.select }}" onKeyDown="{{ r.keySelect }}" role="button" tabindex="0" aria-label="View automation {{ r.n }}" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) 60px 76px 32px;gap:0 12px;padding:0 20px;min-height:48px;align-items:center;border-bottom:1px solid #F1F5F9;background:{{ r.bg }};cursor:pointer">
+          <span style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:{{ r.nc }}">{{ r.n }}</span>
+          <span style="display:flex;align-items:center;gap:6px;min-width:0;font-size:12px"><span style="height:22px;display:inline-flex;align-items:center;padding:0 7px;border-radius:5px;background:#F1F5F9;color:#334155;font-weight:500;white-space:nowrap">{{ r.w }}</span><span style="color:#94A3B8">→</span><span style="color:#475569;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.t }}</span></span>
+          <span style="text-align:right;font:500 12px var(--font-mono)">{{ r.runs }}</span>
+          <span style="text-align:right;font:500 12px var(--font-mono);color:#64748B">{{ r.last }}</span>
+          <button type="button" onClick="{{ r.toggle }}" role="switch" aria-checked="{{ r.on }}" aria-label="Enable {{ r.n }}" style="width:28px;height:16px;border:0;border-radius:8px;background:{{ r.tg }};position:relative;cursor:pointer;padding:0"><span style="position:absolute;left:{{ r.kx }};top:2px;width:12px;height:12px;border-radius:50%;background:#fff"></span></button>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:flex;flex-direction:column;min-width:0;background:#FCFDFE;overflow:auto">
+      <div style="padding:16px 20px 14px;display:flex;flex-direction:column;gap:4px;border-bottom:1px solid #E2E8F0">
+        <div style="display:flex;align-items:center;gap:8px"><span style="flex:1;font-size:16px;font-weight:700;letter-spacing:-.01em">{{ selected.n }}</span><button type="button" onClick="{{ editAutomation }}" style="height:26px;display:flex;align-items:center;padding:0 9px;border:1px solid #E2E8F0;border-radius:6px;background:#fff;font:600 12px var(--font-sans);cursor:pointer">Edit</button></div>
+        <div style="font-size:12px;color:#64748B">{{ selected.description }}</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid #E2E8F0">
+        <div style="padding:10px 20px;border-right:1px solid #F1F5F9"><div style="font-size:11px;color:#64748B">Runs · 30d</div><div style="font:600 16px var(--font-mono)">{{ selected.runs }}</div></div>
+        <div style="padding:10px 16px;border-right:1px solid #F1F5F9"><div style="font-size:11px;color:#64748B">{{ selected.metricLabel }}</div><div style="font:600 16px var(--font-mono);color:#15803D">{{ selected.metric }}</div></div>
+        <div style="padding:10px 16px"><div style="font-size:11px;color:#64748B">{{ selected.thirdLabel }}</div><div style="font:600 16px var(--font-mono)">{{ selected.third }}</div></div>
+      </div>
+      <div style="flex:1;min-height:0;padding:16px 20px;display:flex;flex-direction:column">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="6">
+          <div onClick="{{ s.inspect }}" onKeyDown="{{ s.keyInspect }}" role="button" tabindex="0" aria-label="Inspect step {{ s.type }}: {{ s.t }}" style="display:flex;gap:12px;cursor:pointer">
+            <div style="display:flex;flex-direction:column;align-items:center"><span style="flex:none;width:28px;height:28px;border-radius:8px;background:{{ s.bg }};color:{{ s.fg }};display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 24 24" style="fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="{{ s.icon }}"></path></svg></span><span style="flex:1;width:1px;min-height:10px;background:#E2E8F0"></span></div>
+            <div style="flex:1;min-width:0;padding-bottom:12px;display:flex;flex-direction:column;gap:3px">
+              <div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#94A3B8">{{ s.type }}</div>
+              <div style="font-weight:600">{{ s.t }}</div>
+              <sc-if value="{{ s.body }}"><div style="margin-top:3px;padding:8px 10px;border:1px solid #E2E8F0;border-radius:7px;background:#fff;font-size:12px;color:#475569;line-height:1.5">{{ s.body }}</div></sc-if>
+              <sc-if value="{{ s.sub }}"><div style="font-size:12px;color:#64748B">{{ s.sub }}</div></sc-if>
+            </div>
+          </div>
+        </sc-for>
+        <button type="button" onClick="{{ addStep }}" style="margin-left:40px;height:32px;display:flex;align-items:center;justify-content:center;border:1px dashed #CBD5E1;border-radius:7px;color:#64748B;background:#fff;font:500 12px var(--font-sans);cursor:pointer">+ Add step</button>
+        <div role="status" aria-live="polite" style="margin:8px 0 0 40px;font-size:12px;color:#64748B">{{ feedback }}</div>
+      </div>
+    </div>
+  </div>
+  <sc-if value="{{ templatesOpen }}"><div style="position:absolute;right:20px;top:60px;width:290px;padding:14px;background:#fff;border:1px solid #CBD5E1;border-radius:8px;box-shadow:0 12px 30px rgba(15,23,42,.16);z-index:2"><div style="display:flex;align-items:center"><strong style="flex:1">Automation templates</strong><button type="button" onClick="{{ showTemplates }}" aria-label="Close templates" style="border:0;background:none;cursor:pointer;font-size:18px">×</button></div><sc-for list="{{ templates }}" as="t"><button type="button" onClick="{{ t.choose }}" style="display:block;width:100%;text-align:left;padding:10px;border:0;border-bottom:1px solid #E2E8F0;background:#fff;cursor:pointer">{{ t.name }}</button></sc-for><p style="font-size:12px;color:#64748B">Choosing a template creates a local demo draft.</p></div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1208,&quot;height&quot;:900},&quot;onOpen&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(screen: string) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  state = { selected: 0, disabled: {}, drafts: [], extras: {}, templatesOpen: false, feedback: '' };
+  renderVals() {
+    const baseRows = [
+      ['Estimate follow-up', 'Estimate sent', 'wait 2d → text if unsigned', '142', '12m ago', 1, 1],
+      ['Speed to lead', 'Web lead', 'text within 60s + task', '64', '2m ago', 1],
+      ['Hot lead alert', 'Viewed 3×', 'task for estimate owner', '38', '20m ago', 1],
+      ['Day-before reminder', 'Job tomorrow', 'text client time window', '188', '6:00 PM', 1],
+      ['On my way', 'Crew departs', 'text ETA + tech photo', '211', '1:02 PM', 1],
+      ['Review request', 'Job paid', 'wait 2h → Google review link', '96', '11:40 AM', 1],
+      ['Invoice reminder', 'Overdue 3d', 'text + email, repeat weekly', '27', '9:00 AM', 1],
+      ['Plan season opens', 'Season start', 'auto-schedule plan visits', '84', 'Sep 22', 1],
+      ['Failed payment', 'Card declined', 'text update link, retry 3d', '4', 'Sep 20', 1],
+      ['Lapsed win-back', '12mo no job', 'email 10% offer', '211', 'Sep 1', 0],
+      ['Lights early bird', 'Sep 1', 'email past lights clients', '58', 'Sep 1', 0],
+    ];
+    const rows = [...baseRows, ...this.state.drafts].map(([n, w, t, runs, last, originalOn], index) => {
+      const on = this.state.disabled[index] === undefined ? !!originalOn : !this.state.disabled[index];
+      const select = () => this.setState({ selected: index, feedback: '' });
+      return { n, w, t, runs, last, on, tg: on ? '#0F766E' : '#CBD5E1', kx: on ? '14px' : '2px', nc: on ? '#0F172A' : '#64748B', bg: index === this.state.selected ? '#F0FDFA' : 'transparent', select,
+        keySelect: e => { if (e.target === e.currentTarget && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); select(); } },
+        toggle: e => { e.stopPropagation(); this.setState({ disabled: { ...this.state.disabled, [index]: on }, feedback: `${n} ${on ? 'paused' : 'enabled'} in this demo only.` }); } };
+    });
+    const I = {
+      bolt: 'M13 2 3 14h9l-1 8 10-12h-9l1-8z', clock: 'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM12 6v6l4 2',
+      split: 'M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5', msg: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z',
+      check: 'M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11',
+    };
+    const tone = { teal: ['#F0FDFA', '#0F766E'], slate: ['#F1F5F9', '#475569'], orange: ['#FFF1E8', '#C2410C'], blue: ['#EFF6FF', '#1D4ED8'] };
+    const followupSteps = [
+      ['bolt', 'teal', 'Trigger', 'Estimate is sent', '', 'Any service · any owner'],
+      ['clock', 'slate', 'Wait', '2 days', '', ''],
+      ['split', 'orange', 'Only if', 'Estimate is not signed or declined', '', ''],
+      ['msg', 'blue', 'Send text', 'To client, from estimate owner', 'Hi {first_name}, just checking you got your estimate from Rolling Suds. Happy to answer questions: {estimate_link}', ''],
+      ['clock', 'slate', 'Wait', '3 days', '', ''],
+      ['check', 'teal', 'Create task', 'Call {client} about {estimate_id}', '', 'Assigned to estimate owner · due same day'],
+    ];
+    const selected = rows[this.state.selected] || rows[0];
+    const stepData = this.state.selected === 0 ? followupSteps : [['bolt', 'teal', 'Trigger', selected.w, '', 'Demo trigger'], ['msg', 'blue', 'Action', selected.t, '', 'No message is sent']];
+    const steps = [...stepData, ...Array(this.state.extras[this.state.selected] || 0).fill(['check', 'teal', 'Create task', 'Review automation outcome', '', 'Local demo step'])].map(([ic, t, type, tt, body, sub]) => {
+      const inspect = () => this.setState({ feedback: `${type}: ${tt}. Demo step only; no automation runs.` });
+      return { icon: I[ic], bg: tone[t][0], fg: tone[t][1], type, t: tt, body, sub, inspect, keyInspect: e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); inspect(); } } };
+    });
+    const addDraft = name => {
+      const next = rows.length;
+      this.setState({ drafts: [...this.state.drafts, [name, 'New trigger', 'Configure action', '0', 'Never', 0]], selected: next, templatesOpen: false, feedback: `${name} created as a local demo draft.` });
+    };
+    return { rows, steps, selected: { ...selected, description: this.state.selected === 0 ? 'Recovers estimates that go quiet after sending' : `${selected.w} → ${selected.t}`, metricLabel: this.state.selected === 0 ? 'Then signed' : 'State', metric: this.state.selected === 0 ? '38%' : selected.on ? 'On' : 'Off', thirdLabel: this.state.selected === 0 ? 'Revenue' : 'Last run', third: this.state.selected === 0 ? '$21,400' : selected.last },
+      templatesOpen: this.state.templatesOpen, feedback: this.state.feedback,
+      showTemplates: () => this.setState({ templatesOpen: !this.state.templatesOpen }),
+      templates: ['Estimate follow-up', 'Invoice reminder', 'Review request'].map(name => ({ name, choose: () => addDraft(name + ' copy') })),
+      newAutomation: () => addDraft('Untitled automation'),
+      editAutomation: () => this.setState({ feedback: `Editing ${selected.n}: select a step or add a demo task step.` }),
+      addStep: () => this.setState({ extras: { ...this.state.extras, [this.state.selected]: (this.state.extras[this.state.selected] || 0) + 1 }, feedback: 'Task step added locally; no automation runs.' }) };
+  }
+}
+</script>
+</body>
+</html>

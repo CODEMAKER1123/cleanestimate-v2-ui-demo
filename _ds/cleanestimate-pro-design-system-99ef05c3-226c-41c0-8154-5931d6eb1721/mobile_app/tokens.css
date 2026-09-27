@@ -1,0 +1,243 @@
+/* CleanEstimate Pro — Mobile foundation tokens (Run 1)
+   Teal-first direction per mobile app prompt (Jun 2026).
+   Scoped to .ce-app so theme/brand swap via data attributes. */
+
+.ce-app {
+  /* Brand — teal (default) */
+  --brand: #0F766E;
+  --brand-dark: #115E59;
+  --brand-light: #ECFEFF;
+  --brand-soft: rgba(15, 118, 110, 0.09);
+  --on-brand: #FFFFFF;
+
+  /* Interactive accent */
+  --interactive: #2563EB;
+  --interactive-dark: #1D4ED8;
+  --interactive-soft: #EFF6FF;
+
+  /* Active state accent (teal in dark, brand in light) */
+  --accent: var(--brand);
+
+  /* Semantic */
+  --success: #16A34A;
+  --success-soft: #F0FDF4;
+  --warning: #D97706;
+  --warning-soft: #FFFBEB;
+  --destructive: #DC2626;
+  --destructive-soft: #FEF2F2;
+
+  /* Surfaces */
+  --canvas: #F7F9FA;
+  --surface: #FFFFFF;
+  --surface-2: #F1F5F9;
+  --surface-raised: #FFFFFF;
+  --scrim: rgba(8, 17, 31, 0.44);
+
+  /* Text */
+  --text: #0F172A;
+  --text-muted: #475569;
+  --text-subtle: #94A3B8;
+
+  /* Lines */
+  --border: #E5EAF0;
+  --border-strong: #CBD5E1;
+
+  /* Shape */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius: 14px;
+  --radius-xl: 18px;
+
+  /* Type */
+  --font-sans: "DM Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, Menlo, monospace;
+
+  /* Elevation — diffuse, slate-tinted */
+  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04), 0 10px 28px -20px rgba(15, 23, 42, 0.22);
+  --shadow-raised: 0 2px 6px rgba(15, 23, 42, 0.06), 0 20px 48px -28px rgba(15, 23, 42, 0.32);
+  --shadow-fab: 0 6px 12px -4px rgba(15, 118, 110, 0.35), 0 18px 36px -16px rgba(15, 23, 42, 0.3);
+
+  /* Tab bar */
+  --tabbar-bg: rgba(255, 255, 255, 0.86);
+  --tabbar-border: rgba(15, 23, 42, 0.07);
+
+  /* Suds Club — seasonal accents (Spring/Summer/Fall/Winter) */
+  --season-spring: #3FA06A;
+  --season-summer: #DD9F32;
+  --season-fall: #C56038;
+  --season-winter: #4C7FB8;
+  --season-spring-soft: rgba(63, 160, 106, 0.12);
+  --season-summer-soft: rgba(221, 159, 50, 0.13);
+  --season-fall-soft: rgba(197, 96, 56, 0.12);
+  --season-winter-soft: rgba(76, 127, 184, 0.13);
+
+  /* AI signature — teal→blue gradient, used sparingly */
+  --ai-from: #0F766E;
+  --ai-to: #2563EB;
+  --ai-gradient: linear-gradient(135deg, var(--ai-from), var(--ai-to));
+  --ai-soft: rgba(15, 118, 110, 0.07);
+  --ai-border-opacity: 0.45; /* @kind other */
+
+  font-family: var(--font-sans);
+  color: var(--text);
+  background: var(--canvas);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Blue brand variant (shipping-code comparison) ───────── */
+.ce-app[data-brand="blue"] {
+  --brand: #2563EB;
+  --brand-dark: #1D4ED8;
+  --brand-light: #EFF6FF;
+  --brand-soft: rgba(37, 99, 235, 0.09);
+  --shadow-fab: 0 6px 12px -4px rgba(37, 99, 235, 0.35), 0 18px 36px -16px rgba(15, 23, 42, 0.3);
+}
+
+/* ── Dark theme — navy with teal active accent ───────────── */
+.ce-app[data-theme="dark"] {
+  --ai-from: #2DD4BF;
+  --ai-to: #3B82F6;
+  --ai-soft: rgba(45, 212, 191, 0.08);
+  --ai-border-opacity: 0.55; /* @kind other */
+
+  --brand: #0D9488;
+  --brand-dark: #0F766E;
+  --brand-light: rgba(45, 212, 191, 0.12);
+  --brand-soft: rgba(45, 212, 191, 0.1);
+  --accent: #2DD4BF;
+
+  --interactive: #3B82F6;
+  --interactive-dark: #2563EB;
+  --interactive-soft: rgba(59, 130, 246, 0.14);
+
+  --success: #4ADE80;
+  --success-soft: rgba(34, 197, 94, 0.12);
+  --warning: #FBBF24;
+  --warning-soft: rgba(217, 119, 6, 0.14);
+  --destructive: #F87171;
+  --destructive-soft: rgba(220, 38, 38, 0.16);
+
+  --canvas: #08111F;
+  --surface: #0E1B2E;
+  --surface-2: #14233A;
+  --surface-raised: #122036;
+  --scrim: rgba(2, 6, 14, 0.6);
+
+  --text: #E8EFF7;
+  --text-muted: #9FB0C4;
+  --text-subtle: #5D7189;
+
+  --border: rgba(148, 163, 184, 0.14);
+  --border-strong: rgba(148, 163, 184, 0.28);
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 28px -20px rgba(0, 0, 0, 0.6);
+  --shadow-raised: 0 2px 6px rgba(0, 0, 0, 0.4), 0 20px 48px -28px rgba(0, 0, 0, 0.7);
+  --shadow-fab: 0 6px 12px -4px rgba(45, 212, 191, 0.25), 0 18px 36px -16px rgba(0, 0, 0, 0.5);
+
+  --tabbar-bg: rgba(10, 20, 36, 0.88);
+  --tabbar-border: rgba(148, 163, 184, 0.12);
+
+  /* Suds Club — seasonal accents, lifted for dark ground */
+  --season-spring: #4FBE82;
+  --season-summer: #E9B24C;
+  --season-fall: #DC7A4F;
+  --season-winter: #6CA0DA;
+  --season-spring-soft: rgba(79, 190, 130, 0.16);
+  --season-summer-soft: rgba(233, 178, 76, 0.16);
+  --season-fall-soft: rgba(220, 122, 79, 0.16);
+  --season-winter-soft: rgba(108, 160, 218, 0.16);
+}
+
+.ce-app[data-theme="dark"][data-brand="blue"] {
+  --brand: #2563EB;
+  --brand-dark: #1D4ED8;
+  --brand-light: rgba(96, 165, 250, 0.14);
+  --brand-soft: rgba(96, 165, 250, 0.12);
+  --accent: #60A5FA;
+  --shadow-fab: 0 6px 12px -4px rgba(96, 165, 250, 0.25), 0 18px 36px -16px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Base resets within the app ──────────────────────────── */
+.ce-app * { box-sizing: border-box; }
+.ce-app button {
+  font-family: var(--font-sans);
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  color: inherit;
+  text-align: inherit;
+}
+.ce-app button:active { opacity: 0.85; }
+.ce-app ::-webkit-scrollbar { display: none; }
+.ce-app, .ce-app * { scrollbar-width: none; }
+
+.ce-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* ── AI signature pieces ────────────────────────── */
+.ce-app[data-ai="bold"] { --ai-border-opacity: 1; /* @kind other */ }
+
+.ce-ai-card {
+  position: relative;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+}
+.ce-ai-card::before {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: var(--ai-gradient);
+  opacity: var(--ai-border-opacity);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.ce-ai-text {
+  background: var(--ai-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ce-ai-shimmer { position: relative; overflow: hidden; }
+  .ce-ai-shimmer::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(105deg, transparent 38%, rgba(45, 212, 191, 0.18) 48%, rgba(59, 130, 246, 0.18) 52%, transparent 62%);
+    animation: ceAiSweep 1.7s ease-in-out infinite;
+  }
+  @keyframes ceAiSweep {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(100%); }
+  }
+  .ce-ai-pulse { animation: ceAiPulse 1.5s ease-in-out infinite; }
+  @keyframes ceAiPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.45; }
+  }
+}
+
+/* Entrance for screen swaps */
+@media (prefers-reduced-motion: no-preference) {
+  .ce-screen-enter { animation: ceScreenIn 240ms cubic-bezier(0.2, 0.7, 0.3, 1); }
+  @keyframes ceScreenIn {
+    from { transform: translateY(12px); }
+    to { transform: translateY(0); }
+  }
+  .ce-sheet-enter { animation: ceSheetIn 280ms cubic-bezier(0.2, 0.8, 0.25, 1); }
+  @keyframes ceSheetIn {
+    from { transform: translateY(45%); }
+    to { transform: translateY(0); }
+  }
+}
