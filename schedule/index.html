@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Schedule concept · Clean Estimate</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="app">
+    <nav class="icon-rail" aria-label="Demo navigation">
+      <div class="mark" aria-label="Clean Estimate">ce<span>·</span></div>
+      <a href="../index.html" aria-label="Back to existing demo" title="Back to existing demo">⌂</a>
+      <span class="active-icon" aria-current="page" aria-label="Schedule" title="Schedule">▦</span>
+      <div class="rail-bottom">S</div>
+    </nav>
+    <main class="main">
+      <header class="topbar">
+        <div class="title-group"><div class="eyebrow">OPERATIONS / SCHEDULE</div><h1>Schedule</h1><span class="concept-badge">Schedule concept <i>·</i> Sample data</span></div>
+        <div class="top-actions"><button id="reset" class="text-button">Reset demo</button><button id="queueToggle" class="text-button" aria-controls="queue" aria-expanded="true">Hide queue</button></div>
+      </header>
+      <section class="controls" aria-label="Schedule controls">
+        <div class="date-controls"><button id="prev" aria-label="Previous date">‹</button><button id="today" class="today">Today</button><button id="next" aria-label="Next date">›</button><input id="date" type="date" aria-label="Selected date"><strong id="dateLabel"></strong></div>
+        <div class="view-tabs" role="group" aria-label="Schedule view"><button data-view="day" class="selected">Day</button><button data-view="week">Week</button><button data-view="agenda">Agenda</button></div>
+        <div class="filters"><label class="sr-only" for="scope">Work type</label><select id="scope"><option value="all">All work</option><option value="service">Service</option><option value="sales">Sales</option></select><label class="sr-only" for="resource">Resource</label><select id="resource"><option value="all">All resources</option></select><label class="sr-only" for="search">Search schedule</label><input id="search" type="search" placeholder="Search customer, service, city"></div>
+      </section>
+      <section class="summary" aria-label="Schedule summary"><span id="summaryText"></span><span class="summary-hint">Drag onto the timeline or open a job to schedule</span></section>
+      <div class="workspace">
+        <aside id="queue" class="queue" aria-label="Unscheduled jobs"><div class="queue-head"><div><span class="section-kicker">READY TO PLACE</span><h2>Unscheduled <span id="queueCount"></span></h2></div><span class="queue-dot"></span></div><div id="queueList" class="queue-list"></div><p class="queue-foot">Drop onto an open crew slot, or use the job details to choose a time.</p></aside>
+        <div id="content" class="content" aria-live="polite"></div>
+      </div>
+      <footer><span><b class="legend-dot service-dot"></b> Service crew</span><span><b class="legend-dot sales-dot"></b> Sales visit</span><span>Local concept data · edits stay in this browser</span></footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <div id="drawerShade" class="drawer-shade" hidden></div>
+  <aside id="drawer" class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" hidden>
+    <div class="drawer-head"><span class="section-kicker">JOB DETAILS</span><button id="closeDrawer" aria-label="Close job details">×</button></div>
+    <div id="drawerBody"></div>
+  </aside>
+  <script src="./model.js"></script><script src="./app.js"></script>
+</body>
+</html>
